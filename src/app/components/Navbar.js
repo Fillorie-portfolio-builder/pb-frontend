@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { Building2 } from "lucide-react";
 import { Button } from "./ui/Button";
+import TalentDropdown from "./TalentDropdown";
 
 export default function Navbar() {
   return (
@@ -11,9 +12,10 @@ export default function Navbar() {
           Build Your Portfolio
         </Link>
         <div className="hidden md:flex space-x-6">
-          <Link href="/explore-talent" className="text-gray-600 hover:text-gray-900">
+          <TalentDropdown />
+          {/* <Link href="/explore-talent" className="text-gray-600 hover:text-gray-900">
             Explore Talent
-          </Link>
+          </Link> */}
           <Link href="/explore-projects" className="text-gray-600 hover:text-gray-900">
             Explore Projects
           </Link>

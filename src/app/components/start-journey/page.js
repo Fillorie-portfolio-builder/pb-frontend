@@ -1,8 +1,8 @@
 import Link from "next/link"
 import { Building2, User2, ArrowRight } from "lucide-react"
-import { Button } from "../components/ui/Button"
+import { Button } from "../ui/Button"
 
-export default function SignUp() {
+export default function StartJourney() {
   return (
     <div className="min-h-screen bg-[#FAF8FF] flex flex-col items-center justify-center p-4">
       <div className="max-w-4xl w-full text-center mb-12">
