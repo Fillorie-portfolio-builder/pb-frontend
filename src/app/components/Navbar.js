@@ -25,8 +25,8 @@ export default function Navbar() {
         <Button asChild>
           <Link href="/sign-up">Sign Up</Link>
         </Button>
-        <Link href="/account" className="text-gray-600 hover:text-gray-900">
-          My Account
+        <Link href="/sign-in" className="text-gray-600 hover:text-gray-900">
+          Sign In
         </Link>
       </div>
     </nav>

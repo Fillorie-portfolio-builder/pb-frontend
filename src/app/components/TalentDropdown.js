@@ -1,23 +1,46 @@
-"use client"
+"use client";
 
-import React, { useState } from "react";
-import Link from "next/link"
-import { ChevronRight } from "lucide-react"
+import React, { useState, useRef } from "react";
+import Link from "next/link";
+import { ChevronRight } from "lucide-react";
 
 export default function TalentDropdown() {
-  const [isOpen, setIsOpen] = useState(false)
+  const [isOpen, setIsOpen] = useState(false);
+  const timeoutRef = useRef(null);
+
+  const handleMouseEnter = () => {
+    // Clear any timeout that would close the dropdown
+    if (timeoutRef.current) clearTimeout(timeoutRef.current);
+    setIsOpen(true);
+  };
+
+  const handleMouseLeave = () => {
+    // Delay closing the dropdown to allow smoother transitions
+    timeoutRef.current = setTimeout(() => {
+      setIsOpen(false);
+    }, 200); // Adjust delay if needed
+  };
 
   return (
-    <div className="relative" onMouseEnter={() => setIsOpen(true)} onMouseLeave={() => setIsOpen(false)}>
-      <button
-        className={`text-gray-600 hover:text-gray-900 ${isOpen ? "text-gray-900" : ""}`}
-        onClick={() => setIsOpen(!isOpen)}
-      >
-        Explore Talent
-      </button>
+    <div
+      className="relative"
+      onMouseEnter={handleMouseEnter}
+      onMouseLeave={handleMouseLeave}
+    >
+      {/* Dropdown Trigger */}
+      <Link href="/explore-talent" passHref>
+        <button
+          className={`text-gray-600 hover:text-gray-900 ${
+            isOpen ? "text-gray-900" : ""
+          }`}
+        >
+          Explore Talent
+        </button>
+      </Link>
 
+      {/* Dropdown Menu */}
       {isOpen && (
-        <div className="absolute left-0 top-full mt-2 w-screen max-w-6xl bg-white shadow-lg rounded-lg p-6 z-50">
+        <div className="absolute left-0 top-full mt-1 w-screen max-w-6xl bg-white shadow-lg rounded-lg p-6 z-50">
           <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
             {categories.map((category) => (
               <div key={category.title} className="space-y-4">
@@ -32,7 +55,9 @@ export default function TalentDropdown() {
                   {category.subcategories.map((subcategory) => (
                     <li key={subcategory}>
                       <Link
-                        href={`/explore-talent/${category.slug}/${subcategory.toLowerCase().replace(/\s+/g, "-")}`}
+                        href={`/explore-talent/${category.slug}/${subcategory
+                          .toLowerCase()
+                          .replace(/\s+/g, "-")}`}
                         className="text-gray-600 hover:text-gray-900"
                       >
                         {subcategory}
@@ -46,7 +71,7 @@ export default function TalentDropdown() {
         </div>
       )}
     </div>
-  )
+  );
 }
 
 const categories = [
@@ -92,5 +117,4 @@ const categories = [
     slug: "marketing-sales",
     subcategories: ["Digital Marketing", "Social Media Marketing", "SEO", "Email Marketing", "Sales Strategy"],
   },
-]
-
+];
