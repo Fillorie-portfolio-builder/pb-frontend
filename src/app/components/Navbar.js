@@ -16,7 +16,7 @@ export default function Navbar() {
           {/* <Link href="/explore-talent" className="text-gray-600 hover:text-gray-900">
             Explore Talent
           </Link> */}
-          <Link href="/explore-projects" className="text-gray-600 hover:text-gray-900">
+          <Link href="/explore-project" className="text-gray-600 hover:text-gray-900">
             Explore Projects
           </Link>
         </div>
