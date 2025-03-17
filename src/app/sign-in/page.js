@@ -1,33 +1,37 @@
 "use client"
 
 import Link from "next/link";
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import { Mail, Lock } from "lucide-react";
 import { Button } from "../components/ui/Button";
-import { login } from "../api/auth"
+import { signin } from "../api/auth"
+import { useRouter } from "next/navigation";
+import { AuthContext } from "../context/AuthContext"; 
 
 export default function SignIn() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
+  const router = useRouter(); 
+  const { login } = useContext(AuthContext);
 
   const handleSignIn = async (e) => {
     e.preventDefault();
     setError("");
 
     try {
-      const res = await login({email: email, password: password});
+      const res = await signin({email: email, password: password});
 
-      const accountType = await res.data.accountType;
+      const { user, token } = res.data; // ✅ Extract user & token
 
-      if(accountType === "owner"){
-        router.push("/explore-project"); 
-      } else{
-        router.push("/explore-talent"); 
+      login(user, token); // ✅ Set user data via AuthContext
+
+      if (user.accountType === "owner") {
+        router.push("/explore-talent"); // Redirect for owners
+      } else {
+        router.push("/explore-project"); // Redirect for portfolio builders
       }
      
-
-      
     } catch (err) {
       setError("Something went wrong. Please try again.");
     }

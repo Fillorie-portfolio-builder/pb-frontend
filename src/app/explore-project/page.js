@@ -32,6 +32,7 @@ const ExploreProjects = () => {
   return (
     <div className="min-h-screen max-w bg-gray-100 p-6">
       <div className="max-w-7xl mx-auto">
+        <h1 className="text-3xl font-bold mb-8">Explore Projects</h1>
         <div className="grid md:grid-cols-3 gap-6 mt-6">
           {projects.map((project, index) => (
             <div key={index} className="bg-white p-6 rounded-lg shadow">
