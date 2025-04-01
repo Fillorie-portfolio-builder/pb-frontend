@@ -28,7 +28,13 @@ export default function Navbar() {
       {/* Left Section */}
       <div className="flex items-center space-x-8">
         <Link
-          href="/"
+          href={`/${
+            user
+              ? user.accountType === "owner"
+                ? "explore-talent"
+                : "explore-project"
+              : ""
+          }`}
           className="flex items-center text-purple-600 font-semibold"
         >
           <Building2 className="h-5 w-5 mr-2" />
