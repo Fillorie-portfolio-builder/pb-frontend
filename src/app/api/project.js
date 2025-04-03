@@ -8,6 +8,8 @@ export const getProjectsByOwner = async (ownerId) => axios.get(`${API_BASE_URL}/
 
 export const getProjectById = async (id) => axios.get(`${API_BASE_URL}/project/${id}`);
 
+export const getAllProjects = async () => axios.get(`${API_BASE_URL}/project/`);
+
 
 axios.interceptors.request.use((config) => {
   const token = localStorage.getItem("token");

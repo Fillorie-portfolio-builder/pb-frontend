@@ -101,7 +101,7 @@ export default function PostProject() {
           </Button>
         </div>
         <h1 className="text-3xl font-bold text-purple-600 text-center mb-6">
-          Post a New Project
+          Add/Edit Project
         </h1>
 
         <form onSubmit={handleSubmit} className="space-y-6">

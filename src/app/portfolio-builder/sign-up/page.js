@@ -3,6 +3,7 @@ import React, { useState } from "react";
 import { useRouter } from "next/navigation";
 import { Button } from "../../components/ui/Button";
 import { signup } from "../../api/auth";
+import { categories } from "../../utils/categories";
 
 export default function PortfolioBuilderSignup() {
   const router = useRouter();
@@ -19,10 +20,15 @@ export default function PortfolioBuilderSignup() {
     jobTypes: "",
     availability: "",
     linkedin: "",
+    location: "",
   });
   const [profilePicture, setProfilePicture] = useState(null);
   const [previewImage, setPreviewImage] = useState(null); // ✅ Image preview state
   const [error, setError] = useState("");
+  const [category, setCategory] = useState("");
+  const [subcategories, setSubcategories] = useState([]);
+  const [selectedSubcategories, setSelectedSubcategories] = useState([]);
+  const [skillInput, setSkillInput] = useState("");
 
   const jobTypesOptions = ["Full-time", "Part-time", "Contract", "Freelance"];
 
@@ -42,13 +48,13 @@ export default function PortfolioBuilderSignup() {
 
   // Handle skill input
   const handleSkillKeyDown = (e) => {
-    if (e.key === "Enter" && e.target.value.trim()) {
+    if (e.key === "Enter" && skillInput.trim()) {
       e.preventDefault();
       setFormData((prev) => ({
         ...prev,
-        skills: [...prev.skills, e.target.value.trim()],
+        skills: [...prev.skills, skillInput.trim()],
       }));
-      e.target.value = "";
+      setSkillInput(""); // Clear input field
     }
   };
 
@@ -75,7 +81,11 @@ export default function PortfolioBuilderSignup() {
       //   data.append("profilePicture", profilePicture);
       // }
 
-      const response = await signup(formData);
+      const response = await signup({
+        ...formData,
+        category,
+        subcategories: selectedSubcategories,
+      });
       console.log("Signup success:", response.data);
       router.push("/sign-in");
     } catch (err) {
@@ -174,6 +184,71 @@ export default function PortfolioBuilderSignup() {
               ></textarea>
             </div>
             <div>
+              <label className="block text-gray-700 mb-1">Category</label>
+              <select
+                value={category}
+                className="border p-3 rounded-md w-full"
+                onChange={(e) => {
+                  const selected = e.target.value;
+                  setCategory(selected);
+                  setSubcategories(
+                    categories.find((cat) => cat.slug === selected)
+                      ?.subcategories || []
+                  );
+                  setSelectedSubcategories([]); // reset selected chips
+                }}
+              >
+                <option value="">Select a category</option>
+                {categories.map((cat) => (
+                  <option key={cat.slug} value={cat.slug}>
+                    {cat.title}
+                  </option>
+                ))}
+              </select>
+            </div>
+
+            {subcategories.length > 0 && (
+              <div className="mt-2">
+                <label className="block text-gray-700 mb-1">
+                  Select Subcategories
+                </label>
+                <div className="flex flex-wrap gap-2">
+                  {subcategories.map((sub, idx) => (
+                    <span
+                      key={idx}
+                      onClick={() => {
+                        if (selectedSubcategories.includes(sub)) {
+                          setSelectedSubcategories((prev) =>
+                            prev.filter((s) => s !== sub)
+                          );
+                        } else {
+                          setSelectedSubcategories((prev) => [...prev, sub]);
+                        }
+                      }}
+                      className={`cursor-pointer px-3 py-1 rounded-full text-sm ${
+                        selectedSubcategories.includes(sub)
+                          ? "bg-purple-600 text-white"
+                          : "bg-purple-100 text-purple-800"
+                      }`}
+                    >
+                      {sub}
+                    </span>
+                  ))}
+                </div>
+              </div>
+            )}
+            <div>
+              <label className="block text-gray-700 mb-1">Location</label>
+              <input
+                type="text"
+                name="location"
+                value={formData.location}
+                className="border p-3 rounded-md w-full"
+                onChange={handleChange}
+                required
+              />
+            </div>
+            <div>
               <label className="block text-gray-700 mb-1">Mobile</label>
               <input
                 type="text"
@@ -184,6 +259,7 @@ export default function PortfolioBuilderSignup() {
                 required
               />
             </div>
+
             <div>
               <label className="block text-gray-700 mb-1">Profession</label>
               <input
@@ -215,12 +291,21 @@ export default function PortfolioBuilderSignup() {
 
             <div>
               <label className="block text-gray-700 mb-1">Availability</label>
-              <textarea
+              <select
                 name="availability"
                 value={formData.availability}
                 className="border p-3 rounded-md w-full"
-                onChange={handleChange}
-              ></textarea>
+                onChange={(e) =>
+                  setFormData({
+                    ...formData,
+                    availability: e.target.value === "true",
+                  })
+                }
+              >
+                <option value="">Select availability</option>
+                <option value="true">Available</option>
+                <option value="false">Not Available</option>
+              </select>
             </div>
             <div>
               <label className="block text-gray-700 mb-1">
@@ -239,8 +324,10 @@ export default function PortfolioBuilderSignup() {
               <input
                 type="text"
                 className="border p-3 rounded-md w-full"
-                onKeyDown={handleSkillKeyDown}
                 placeholder="Press Enter to add a skill"
+                value={skillInput}
+                onChange={(e) => setSkillInput(e.target.value)}
+                onKeyDown={handleSkillKeyDown}
               />
               <div className="flex flex-wrap mt-2 gap-2">
                 {formData.skills.map((skill, index) => (

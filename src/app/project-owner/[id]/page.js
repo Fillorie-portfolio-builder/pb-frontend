@@ -59,7 +59,7 @@ export default function ProjectOwner() {
                 <h3 className="font-semibold text-lg">What We Offer</h3>
                 <ul className="list-disc list-inside text-gray-600">
                   {owner?.offers.map((offer) => {
-                    <li>{offer}</li>;
+                    return <li>{offer}</li>;
                   })}
                 </ul>
               </div>
