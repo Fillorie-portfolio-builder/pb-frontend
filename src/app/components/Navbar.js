@@ -14,6 +14,7 @@ import {
   DropdownMenuSeparator,
 } from "./ui/Dropdown"; // ✅ Import dropdown menu components
 
+
 export default function Navbar() {
   const { user, logout } = useContext(AuthContext); // ✅ Use AuthContext
   const router = useRouter();
@@ -46,6 +47,7 @@ export default function Navbar() {
             href="/explore-project"
             className="text-gray-600 hover:text-gray-900"
           >
+
             Explore Projects
           </Link>
         </div>
@@ -94,6 +96,7 @@ export default function Navbar() {
             </Link>
           </>
         )}
+
       </div>
     </nav>
   );
