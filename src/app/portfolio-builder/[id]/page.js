@@ -4,26 +4,42 @@ import Link from "next/link"
 import { Button } from ".././../components/ui/Button"
 import { Star, LinkedinIcon } from "lucide-react"
 import { useParams } from "next/navigation";
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { getBuilderById } from "../../api/builder";
+import { getProjectById } from "../../api/project";
+import { AuthContext } from "../../context/AuthContext";
 
 export default function TalentProfile() {
   const params = useParams();
   const builderId = params.id;
   const [builder, setBuilder] = useState(null);
+  const { user } = useContext(AuthContext);
+  const [ projects, setProjects] = useState([]);
 
   useEffect(() => {
-    const fetchBuilder = async () => {
+    const fetchBuilderAndProjects = async () => {
       try {
-        const res = await getBuilderById(builderId);
-        setBuilder(res.data);
+        const builderRes = await getBuilderById(builderId);
+        const builderData = builderRes.data;
+        setBuilder(builderData);
+
+        // If builder has project IDs, fetch each project
+        if (builderData.projects && builderData.projects.length > 0) {
+          const projectPromises = builderData.projects.map((projectId) =>
+            getProjectById(projectId).then((res) => res.data)
+          );
+          const projectsData = await Promise.all(projectPromises);
+          setProjects(projectsData); // You’ll need a `projects` state
+        } else {
+          setProjects([]); // Optional: handle empty case
+        }
       } catch (err) {
-        console.error("Error fetching builder:", err);
+        console.error("Error fetching builder or projects:", err);
       }
     };
 
     if (builderId) {
-      fetchBuilder();
+      fetchBuilderAndProjects();
     }
   }, [builderId]);
 
@@ -56,7 +72,7 @@ export default function TalentProfile() {
             <p className="text-gray-600 mb-4">{builder.profession}</p>
             <div className="flex items-center gap-1 mb-2">
               <Star className="h-4 w-4 fill-yellow-400 text-yellow-400" />
-              <span className="font-medium">{builder.rating || "0.0"}</span>
+              <span className="font-medium">{builder.ratings || "0.0"}</span>
               <span className="text-gray-600 text-sm">
                 ({builder.reviewCount || 0} reviews)
               </span>
@@ -64,8 +80,29 @@ export default function TalentProfile() {
             <p className="text-gray-600 text-sm mb-4">
               {builder.projectsCompleted || 0} Projects Completed
             </p>
+            <div className="flex items-center gap-2 mb-3">
+              <span
+                className={`w-2 h-2 rounded-full ${
+                  builder.availability ? "bg-green-500" : "bg-red-500"
+                }`}
+              />
+              <span
+                className={`text-sm font-medium ${
+                  builder.availability ? "text-green-600" : "text-red-600"
+                }`}
+              >
+                {builder.availability ? "Available" : "Not Available"}
+              </span>
+            </div>
             <div className="flex flex-col gap-2 w-full">
               <Button className="w-full">Contact</Button>
+              {user?.id === builder.id && (
+                <Link href={`/portfolio-builder/${builder.id}/edit`}>
+                  <Button variant="outline" className="w-full mt-1">
+                    Edit Profile
+                  </Button>
+                </Link>
+              )}
               {builder.linkedin && (
                 <a href={builder.linkedin} target="_blank" rel="noreferrer">
                   <Button variant="outline" className="w-full">
@@ -85,7 +122,16 @@ export default function TalentProfile() {
 
             <section className="mb-8">
               <h2 className="text-xl font-semibold mb-4">Skills</h2>
-              <p className="text-gray-600">{builder.skillSets?.join(", ")}</p>
+              <div className="flex flex-wrap gap-2">
+                {builder.skillSets?.map((skill, index) => (
+                  <span
+                    key={index}
+                    className="bg-purple-100 text-purple-800 px-3 py-1 rounded-full text-sm"
+                  >
+                    {skill}
+                  </span>
+                ))}
+              </div>
             </section>
 
             <section className="mb-8">
@@ -94,7 +140,7 @@ export default function TalentProfile() {
               </h2>
               <p className="text-gray-600">{builder.educationalBackground}</p>
             </section>
-
+            {/* 
             <section className="mb-8">
               <h2 className="text-xl font-semibold mb-4">
                 Preferred Job Types
@@ -102,52 +148,63 @@ export default function TalentProfile() {
               <p className="text-gray-600">
                 {builder.preferredJobTypes?.join(", ")}
               </p>
-            </section>
+            </section> */}
 
-            <section className="mb-8">
+            {/* <section className="mb-8">
               <h2 className="text-xl font-semibold mb-4">Availability</h2>
-              <p className="text-gray-600">{builder.availability}</p>
-            </section>
+              <p className="text-gray-600">
+                {builder.availability ? "Available" : "Not Available"}
+              </p>
+            </section> */}
           </div>
         </div>
 
         {/* Portfolio Section (optional if included in API) */}
-        {builder.portfolio && builder.portfolio.length > 0 && (
-          <section>
-            <div className="flex justify-between items-center mb-6">
-              <h2 className="text-2xl font-semibold">Portfolio</h2>
-            </div>
-            <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
-              {builder.portfolio.map((item, index) => (
-                <div
-                  key={index}
-                  className="bg-white rounded-lg overflow-hidden shadow-sm"
-                >
-                  <div className="aspect-square bg-gray-100 relative">
-                    <img
-                      src={item.image}
-                      alt={item.title}
-                      className="w-full h-full object-cover"
-                    />
-                  </div>
-                  <div className="p-4">
-                    <h3 className="font-semibold mb-2">{item.title}</h3>
-                    <p className="text-sm text-gray-600 mb-3">
-                      {item.description}
-                    </p>
-                    <Link
-                      href={item.link}
-                      className="text-sm text-purple-600 hover:text-purple-700"
-                      target="_blank"
-                    >
-                      Visit
-                    </Link>
-                  </div>
+        <div className="flex justify-center mt-10">
+          <div className="max-w-7xl w-full bg-white p-6 rounded-lg shadow">
+            {projects.length > 0 && (
+              <>
+                <h2 className="text-xl font-semibold mb-4">Your Projects</h2>
+                <div className="grid md:grid-cols-3 gap-6">
+                  {projects.map((project, index) => (
+                    <div key={index} className="bg-white p-6 rounded-lg shadow">
+                      <div className="w-full h-36 bg-gray-200 rounded mb-4 flex items-center justify-center">
+                        <span className="text-gray-400">
+                          [ Image Placeholder ]
+                        </span>
+                      </div>
+                      <h3 className="text-lg font-semibold">
+                        {project.projectName}
+                      </h3>
+                      <p className="text-gray-500 text-sm">
+                        {project.timeline || "⏳ Flexible Timeline"}
+                      </p>
+                      <div className="flex flex-wrap gap-2 mt-2">
+                        {project.technologies?.map((tag, i) => (
+                          <span
+                            key={i}
+                            className="bg-purple-200 text-purple-800 text-xs px-2 py-1 rounded-full"
+                          >
+                            {tag}
+                          </span>
+                        ))}
+                      </div>
+                      <p className="text-gray-600 mt-2 text-sm line-clamp-3">
+                        {project.description}
+                      </p>
+                      <p className="text-purple-600 font-medium mt-2 text-sm">
+                        {project.subcategory}
+                      </p>
+                      <Link href={`/project/${project.id}`} passHref>
+                        <Button className="mt-4 w-full">View Project</Button>
+                      </Link>
+                    </div>
+                  ))}
                 </div>
-              ))}
-            </div>
-          </section>
-        )}
+              </>
+            )}
+          </div>
+        </div>
       </div>
     </div>
   );

@@ -1,9 +1,9 @@
 "use client";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Button } from "../../components/ui/Button";
-import { addProject } from "../../api/project"
+import { addProject, getProjectById } from "../../api/project"
 import { categories } from "../../utils/categories";
-import { useRouter } from "next/navigation";
+import { useParams, useRouter } from "next/navigation";
 
 export default function PostProject() {
   const [projectName, setProjectName] = useState("");
@@ -17,6 +17,31 @@ export default function PostProject() {
   const [category, setCategory] = useState("");
   const [subcategory, setSubcategory] = useState("");
   const router = useRouter();
+  const { id } = useParams(); 
+
+  useEffect(() => {
+    const fetchProject = async () => {
+      if (!id) return; // If creating new, no ID is present
+  
+      try {
+        const res = await getProjectById(id);
+        const data = res.data;
+        setProjectName(data.projectName);
+        setDescription(data.description);
+        setTimeline(data.timeline || "");
+        setTechnologies(data.technologies || []);
+        setKnowledgeRequired(data.knowledgeRequired || "");
+        setUrls(data.urls || [""]);
+        setMediaFiles(data.mediaFiles || []);
+        setCategory(data.category || "");
+        setSubcategory(data.subcategory || "");
+      } catch (err) {
+        console.error("Error loading project", err);
+      }
+    };
+  
+    fetchProject();
+  }, [id]);
 
   const handleAddTechnology = () => {
     if (techInput.trim()) {

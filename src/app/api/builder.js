@@ -4,6 +4,8 @@ import { API_BASE_URL } from "./url";
 
 export const getBuilderById = async (id) => axios.get(`${API_BASE_URL}/builder/${id}`);
 
+export const updateBuilderById = async (id, data) => axios.put(`${API_BASE_URL}/builder/${id}`, data);
+
 export const getAllBuilders = async (params = {}) => {
   const query = new URLSearchParams(params).toString();
   const url = `${API_BASE_URL}/builder${query ? `?${query}` : ""}`;
