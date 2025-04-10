@@ -2,7 +2,7 @@
 import React, { useContext } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import { Building2, User, LogOut } from "lucide-react";
+import { Building2, User, LogOut ,Settings } from "lucide-react";
 import { Button } from "./ui/Button";
 import TalentDropdown from "./TalentDropdown";
 import { AuthContext } from "../context/AuthContext"; // ✅ Import AuthContext
@@ -49,6 +49,12 @@ export default function Navbar() {
           >
 
             Explore Projects
+          </Link>
+          <Link
+            href="/profile-settings"
+            className="text-gray-600 hover:text-gray-900"
+          >
+            <Settings />
           </Link>
         </div>
       </div>
