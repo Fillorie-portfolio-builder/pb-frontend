@@ -1,3 +1,4 @@
+
 "use client"
 
 import Link from "next/link";
@@ -132,12 +133,10 @@ export default function ExploreTalent() {
   //     ],
   //   },
   // ];
-
   return (
     <div className="min-h-screen bg-[#FAF8FF] px-4 py-8">
       <div className="max-w-7xl mx-auto">
         <h1 className="text-3xl font-bold mb-8">Explore Talents</h1>
-
         {categories.map((category) => {
           const selectedSubcategory = activeFilters[category.slug];
 
