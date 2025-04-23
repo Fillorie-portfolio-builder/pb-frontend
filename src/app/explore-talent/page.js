@@ -248,7 +248,7 @@ export default function ExploreTalent() {
                           </span>
                         </div>
                         <Link
-                          href={`/talent/${talent.id}`}
+                          href={`/portfolio-builder/${talent.id}`}
                           className="text-purple-600 hover:text-gray-800 text-sm font-medium"
                         >
                           View
