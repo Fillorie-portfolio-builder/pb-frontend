@@ -7,12 +7,16 @@ import Link from "next/link";
 
 const ExploreProjects = () => {
   const [projects, setProjects] = useState([]);
+  const [currentPage, setCurrentPage] = useState(1);
+  const [totalPages, setTotalPages] = useState(1);
+  const [projectsPerPage] = useState(6);
 
   useEffect(() => {
     const getProjects = async () => {
       try {
         const response = await getAllProjects();
         setProjects(response.data);
+        setTotalPages(Math.ceil(response.data.length / projectsPerPage));
       } catch (error) {
         console.error("Failed to fetch project:", error);
       }
@@ -21,12 +25,18 @@ const ExploreProjects = () => {
     getProjects();
   }, []);
 
+  const indexofLastProject = currentPage * projectsPerPage;
+  const indexofFirstProject = indexofLastProject - projectsPerPage;
+  const currentProjects = projects.slice(indexofFirstProject, indexofLastProject);
+
+  const paginate = (pageNumber) => setCurrentPage(pageNumber);
+
   return (
     <div className="min-h-screen max-w bg-gray-100 p-6">
       <div className="max-w-7xl mx-auto">
         <h1 className="text-3xl font-bold mb-8">Explore Projects</h1>
         <div className="grid md:grid-cols-3 gap-6 mt-6">
-          {projects.map((project, index) => (
+          {currentProjects.map((project, index) => (
             <div key={index} className="bg-white p-6 rounded-lg shadow">
               <div className="w-full h-36 bg-gray-200 rounded mb-4 flex items-center justify-center">
                 <span className="text-gray-400">[ Image Placeholder ]</span>
@@ -55,6 +65,37 @@ const ExploreProjects = () => {
             </div>
           ))}
         </div>
+        {totalPages > 1 && (
+          <div className="flex justify-center mt-6">
+            <nav className="flex items-center space-x-2">
+              <button
+                onClick={() => paginate(currentPage > 1 ? currentPage - 1 : 1)}
+                disabled={currentPage === 1}
+                className={`px-4 py-2 rounded border ${currentPage === 1 ? "bg-gray-200 text-gray-500 cursor-not-allowed" : "bg-white text-purple-600 hover:bg-purple-50 border-purple-600"}`}
+              >
+                Previous
+              </button>
+
+              {Array.from({ length: totalPages }, (_, i) => i + 1).map((number) => (
+                <button
+                  key={number}
+                  onClick={() => paginate(number)}
+                  className={`px-4 py-2 rounded border ${currentPage === number ? "bg-purple-600 text-white border-purple-600" : "bg-white text-purple-600 hover:bg-purple-50 border-gray-300"}`}
+                >
+                  {number}
+                </button>
+              ))}
+
+              <button
+                onClick={() => paginate(currentPage < totalPages ? currentPage + 1 : totalPages)}
+                disabled={currentPage === totalPages}
+                className={`px-4 py-2 rounded border ${currentPage === totalPages ? "bg-gray-200 text-gray-500 cursor-not-allowed" : "bg-white text-purple-600 hover:bg-purple-50 border-purple-600"}`}
+              >
+                Next
+              </button>
+            </nav>
+          </div>
+        )}
       </div>
     </div>
   );
