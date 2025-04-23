@@ -2,7 +2,7 @@
 import React, { useContext } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import { Building2, User, LogOut ,Settings } from "lucide-react";
+import { Building2, User, LogOut } from "lucide-react";
 import { Button } from "./ui/Button";
 import TalentDropdown from "./TalentDropdown";
 import { AuthContext } from "../context/AuthContext"; // ✅ Import AuthContext
@@ -29,13 +29,12 @@ export default function Navbar() {
       {/* Left Section */}
       <div className="flex items-center space-x-8">
         <Link
-          href={`/${
-            user
-              ? user.accountType === "owner"
-                ? "explore-talent"
-                : "explore-project"
-              : ""
-          }`}
+          href={`/${user
+            ? user.accountType === "owner"
+              ? "explore-talent"
+              : "explore-project"
+            : ""
+            }`}
           className="flex items-center text-purple-600 font-semibold"
         >
           <Building2 className="h-5 w-5 mr-2" />
@@ -49,12 +48,6 @@ export default function Navbar() {
           >
 
             Explore Projects
-          </Link>
-          <Link
-            href="/profile-settings"
-            className="text-gray-600 hover:text-gray-900"
-          >
-            <Settings />
           </Link>
         </div>
       </div>
@@ -73,13 +66,21 @@ export default function Navbar() {
             <DropdownMenuContent className="w-48">
               <DropdownMenuItem asChild>
                 <Link
-                  href={`/${
-                    user.accountType === "owner"
-                      ? "project-owner"
-                      : "portfolio-builder"
-                  }/${user.id}`}
+                  href={`/${user.accountType === "owner"
+                    ? "project-owner"
+                    : "portfolio-builder"
+                    }/${user.id}`}
                 >
                   Profile
+                </Link>
+              </DropdownMenuItem>
+              <DropdownMenuSeparator />
+              <DropdownMenuItem asChild>
+                <Link
+                  href="/profile-settings"
+                  className="text-gray-600 hover:text-gray-900"
+                >
+                  Settings
                 </Link>
               </DropdownMenuItem>
               <DropdownMenuSeparator />
