@@ -161,11 +161,10 @@ export default function ExploreTalent() {
                       onClick={() =>
                         handleSubcategorySelect(category.slug, sub)
                       }
-                      className={`px-3 py-1 rounded-full text-sm border ${
-                        selectedSubcategory === sub
+                      className={`px-3 py-1 rounded-full text-sm border ${selectedSubcategory === sub
                           ? "bg-purple-600 text-white"
                           : "bg-white text-purple-600 border-purple-300"
-                      } hover:bg-purple-100 hover:text-purple-600`}
+                        } hover:bg-purple-100 hover:text-purple-600`}
                     >
                       {sub}
                     </button>
@@ -184,78 +183,91 @@ export default function ExploreTalent() {
               </div>
 
               {filteredBuilders?.length > 0 ? (
-                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-                  {filteredBuilders?.map((talent) => (
-                    <div
-                      key={talent.id}
-                      className="bg-white rounded-xl p-6 shadow-sm hover:shadow-md transition-shadow"
-                    >
-                      <div className="flex items-start gap-4 mb-4">
-                        <div className="w-12 h-12 rounded-full bg-gray-200 overflow-hidden">
-                          <img
-                            src={talent.avatar || "/placeholder.svg"}
-                            alt={talent.name}
-                            className="w-full h-full object-cover"
-                          />
+                <>
+                  <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+                    {filteredBuilders?.slice(0, 4).map((talent) => (
+                      <div
+                        key={talent.id}
+                        className="bg-white rounded-xl p-6 shadow-sm hover:shadow-md transition-shadow"
+                      >
+                        <div className="flex items-start gap-4 mb-4">
+                          <div className="w-12 h-12 rounded-full bg-gray-200 overflow-hidden">
+                            <img
+                              src={talent.avatar || "/placeholder.svg"}
+                              alt={talent.name}
+                              className="w-full h-full object-cover"
+                            />
+                          </div>
+                          <div>
+                            <h3 className="font-semibold">
+                              {talent.firstName} {talent.lastName}
+                            </h3>
+                            <p className="text-gray-600 text-sm">
+                              {talent.profession}
+                            </p>
+                          </div>
                         </div>
-                        <div>
-                          <h3 className="font-semibold">
-                            {talent.firstName} {talent.lastName}
-                          </h3>
-                          <p className="text-gray-600 text-sm">
-                            {talent.profession}
-                          </p>
+
+                        <div className="flex items-center gap-2 text-sm text-gray-600 mb-3">
+                          📍 {talent.location}
                         </div>
-                      </div>
 
-                      <div className="flex items-center gap-2 text-sm text-gray-600 mb-3">
-                        📍 {talent.location}
-                      </div>
+                        <div className="flex items-center gap-2 text-sm text-gray-600 mb-4">
+                          ✅ {talent.projectsCompleted} completed projects
+                        </div>
 
-                      <div className="flex items-center gap-2 text-sm text-gray-600 mb-4">
-                        ✅ {talent.projectsCompleted} completed projects
-                      </div>
+                        <div className="flex flex-wrap gap-2 mb-4">
+                          {talent.skillSets?.map((skill) => (
+                            <span
+                              key={skill}
+                              className="px-3 py-1 rounded-full text-sm bg-purple-100 text-purple-600"
+                            >
+                              {skill}
+                            </span>
+                          ))}
+                        </div>
 
-                      <div className="flex flex-wrap gap-2 mb-4">
-                        {talent.skillSets?.map((skill) => (
-                          <span
-                            key={skill}
-                            className="px-3 py-1 rounded-full text-sm bg-purple-100 text-purple-600"
+                        <p className="text-gray-600 text-sm mb-4 line-clamp-3">
+                          {talent.bio}
+                        </p>
+
+                        <div className="flex items-center justify-between">
+                          <div className="flex items-center gap-2">
+                            <span
+                              className={`w-2 h-2 rounded-full ${talent.availability
+                                  ? "bg-green-500"
+                                  : "bg-red-500"
+                                }`}
+                            />
+                            <span className="text-sm text-gray-600">
+                              {talent.availability
+                                ? "Available"
+                                : "Not Available"}
+                            </span>
+                          </div>
+                          <Link
+                            href={`/talent/${talent.id}`}
+                            className="text-purple-600 hover:text-gray-800 text-sm font-medium"
                           >
-                            {skill}
-                          </span>
-                        ))}
-                      </div>
-
-                      <p className="text-gray-600 text-sm mb-4 line-clamp-3">
-                        {talent.bio}
-                      </p>
-
-                      <div className="flex items-center justify-between">
-                        <div className="flex items-center gap-2">
-                          <span
-                            className={`w-2 h-2 rounded-full ${
-                              talent.availability
-                                ? "bg-green-500"
-                                : "bg-red-500"
-                            }`}
-                          />
-                          <span className="text-sm text-gray-600">
-                            {talent.availability
-                              ? "Available"
-                              : "Not Available"}
-                          </span>
+                            View
+                          </Link>
                         </div>
-                        <Link
-                          href={`/talent/${talent.id}`}
-                          className="text-purple-600 hover:text-gray-800 text-sm font-medium"
-                        >
-                          View
-                        </Link>
                       </div>
+                    ))}
+                  </div>
+                  {filteredBuilders?.length > 4 && (
+                    <div className="flex justify-end mt-6">
+                      <Link 
+                      className="text-purple-600 border border-purple-600 px-3 py-2 rounded-md hover:text-gray-800 text-sm font-medium"
+                      href={{
+                        pathname: `/explore-talent/${category.slug}`,
+                        query: selectedSubcategory ? { subcategory: selectedSubcategory } : {}
+                      }}>
+                        View All
+                      </Link>
                     </div>
-                  ))}
-                </div>
+                  )}
+                </>
               ) : (
                 <p className="text-gray-500 text-sm mt-4">
                   No builders found for this category.
