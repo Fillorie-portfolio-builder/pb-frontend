@@ -1,16 +1,35 @@
-"use client"
+"use client";
 
-import Link from "next/link"
-import { Button } from ".././../components/ui/Button"
-import { Star, LinkedinIcon } from "lucide-react"
+import Link from "next/link";
+import { Button } from "../../components/ui/Button";
+import { Star, LinkedinIcon, X } from "lucide-react";
 import { useParams } from "next/navigation";
 import { useEffect, useState } from "react";
 import { getBuilderById } from "../../api/builder";
+
+function Modal({ isOpen, onClose, children }) {
+  if (!isOpen) return null;
+  return (
+    <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50">
+      <div className="bg-white rounded-lg max-w-md w-full p-6 shadow-lg relative">
+        <button
+          onClick={onClose}
+          className="absolute top-2 right-2 text-gray-500 hover:text-gray-800"
+        >
+          <X className="w-5 h-5" />
+        </button>
+        {children}
+      </div>
+    </div>
+  );
+}
 
 export default function TalentProfile() {
   const params = useParams();
   const builderId = params.id;
   const [builder, setBuilder] = useState(null);
+  const [isOpen, setIsOpen] = useState(false);
+  const [isOpenReview, setIsOpenReview] = useState(false);
 
   useEffect(() => {
     const fetchBuilder = async () => {
@@ -30,8 +49,6 @@ export default function TalentProfile() {
   if (!builder) {
     return <div className="text-center py-20">Loading profile...</div>;
   }
-  
-
   return (
     <div className="min-h-screen bg-[#FAF8FF]">
       <div className="max-w-4xl mx-auto px-4 py-8">
@@ -57,15 +74,18 @@ export default function TalentProfile() {
             <div className="flex items-center gap-1 mb-2">
               <Star className="h-4 w-4 fill-yellow-400 text-yellow-400" />
               <span className="font-medium">{builder.rating || "0.0"}</span>
-              <span className="text-gray-600 text-sm">
-                ({builder.reviewCount || 0} reviews)
-              </span>
+              <span className="text-gray-600 text-sm">({builder.reviewCount || 0} reviews)</span>
             </div>
             <p className="text-gray-600 text-sm mb-4">
               {builder.projectsCompleted || 0} Projects Completed
             </p>
             <div className="flex flex-col gap-2 w-full">
-              <Button className="w-full">Contact</Button>
+              <Button onClick={() => setIsOpen(true)}>
+                Contact
+              </Button>
+              <button onClick={() => setIsOpenReview(true)} className="bg-purple-600 text-white px-5 py-2 mb-3 rounded hover:bg-purple-700 transition w-full">
+                Give a Review
+              </button>
               {builder.linkedin && (
                 <a href={builder.linkedin} target="_blank" rel="noreferrer">
                   <Button variant="outline" className="w-full">
@@ -96,9 +116,7 @@ export default function TalentProfile() {
             </section>
 
             <section className="mb-8">
-              <h2 className="text-xl font-semibold mb-4">
-                Preferred Job Types
-              </h2>
+              <h2 className="text-xl font-semibold mb-4">Preferred Job Types</h2>
               <p className="text-gray-600">
                 {builder.preferredJobTypes?.join(", ")}
               </p>
@@ -156,6 +174,39 @@ export default function TalentProfile() {
             </div>
           </div>
       </div>
+
+      {/* Modal for Contact Info */}
+      <Modal isOpen={isOpen} onClose={() => setIsOpen(false)}>
+        <h2 className="text-xl font-semibold mb-4">Contact Information</h2>
+        <p className="text-gray-700 mb-2">
+          <strong>Phone:</strong> {builder.phone || "N/A"}
+        </p>
+        <p className="text-gray-700">
+          <strong>Email:</strong> {builder.email || "N/A"}
+        </p>
+      </Modal>
+
+      <Modal isOpen={isOpenReview} onClose={() => setIsOpenReview(false)} className="w-full">
+        <div className="flex flex-col items-center">
+          <h2 className="text-xl font-semibold mb-4">Give a Review </h2>
+          <div className="flex items-center gap-1 mb-2">
+            <Star className="h-4 w-4 fill-yellow-400 text-yellow-400" />
+            <Star className="h-4 w-4 fill-yellow-400 text-yellow-400" />
+            <Star className="h-4 w-4 fill-yellow-400 text-yellow-400" />
+            <Star className="h-4 w-4 fill-yellow-400 text-yellow-400" />
+            <Star className="h-4 w-4 fill-yellow-400 text-yellow-400" />
+          </div>
+          <div className="w-full mb-4">
+            <input
+              type="text"
+              placeholder="Write a review..."
+              className="border border-gray-300 rounded-lg p-2 mb-4 w-full" />
+          </div>
+          <div className="">
+            <button className="w-full px-5 py-3 bg-gray-500 rounded-lg text-white hover:bg-gray-700 font-semibold" type="submit">Submit a review</button>
+          </div>
+        </div>
+      </Modal>
     </div>
   );
 }

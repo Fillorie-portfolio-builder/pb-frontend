@@ -155,25 +155,6 @@ export default function PortfolioPage() {
           </div>
         </div>
 
-        {/* <div className="grid md:grid-cols-3 gap-4">
-    \
-          <div className="md:col-span-2 bg-gray-200 rounded-lg h-106 flex items-center justify-center">
-            <span className="text-gray-400">Image</span>
-          </div>
-
-      
-          <div className="grid grid-cols-2 gap-4">
-            <div className="bg-gray-200 rounded-lg h-56 flex items-center justify-center">
-              <span className="text-gray-400">+</span>
-            </div>
-            <div className="bg-gray-200 rounded-lg h-56 flex items-center justify-center">
-              <span className="text-gray-400">+</span>
-            </div>
-            <div className="bg-gray-200 rounded-lg h-56 flex items-center justify-center col-span-2">
-              <span className="text-gray-400">+</span>
-            </div>
-          </div>
-        </div> */}
 
         {/* Project Details */}
         <div className="mt-6 grid md:grid-cols-2 gap-6">
