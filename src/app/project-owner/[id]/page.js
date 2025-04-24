@@ -127,11 +127,11 @@ export default function ProjectOwner() {
                         key={index}
                         className="bg-white p-6 rounded-lg shadow"
                       >
-                        <div className="w-full h-36 bg-gray-200 rounded mb-4 flex items-center justify-center">
+                        {/* <div className="w-full h-36 bg-gray-200 rounded mb-4 flex items-center justify-center">
                           <span className="text-gray-400">
                             [ Image Placeholder ]
                           </span>
-                        </div>
+                        </div> */}
                         <h3 className="text-lg font-semibold">
                           {project.projectName}
                         </h3>

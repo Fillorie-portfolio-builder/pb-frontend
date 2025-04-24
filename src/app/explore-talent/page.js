@@ -150,38 +150,51 @@ export default function ExploreTalent() {
 
           return (
             <div key={category.slug} className="mb-12">
-              <div className="mb-4">
-                <div className="text-gray-600 font-semibold text-md mb-2">
-                  {category.title}
-                </div>
-                <div className="flex flex-wrap gap-2">
-                  {category.subcategories.map((sub, index) => (
-                    <button
-                      key={index}
-                      onClick={() =>
-                        handleSubcategorySelect(category.slug, sub)
-                      }
-                      className={`px-3 py-1 rounded-full text-sm border ${selectedSubcategory === sub
+              <div className="flex items-center justify-between mb-4">
+                <div className="mb-4">
+                  <div className="text-gray-600 font-semibold text-md mb-2">
+                    {category.title}
+                  </div>
+                  <div className="flex flex-wrap gap-2">
+                    {category.subcategories.map((sub, index) => (
+                      <button
+                        key={index}
+                        onClick={() =>
+                          handleSubcategorySelect(category.slug, sub)
+                        }
+                        className={`px-3 py-1 rounded-full text-sm border ${selectedSubcategory === sub
                           ? "bg-purple-600 text-white"
                           : "bg-white text-purple-600 border-purple-300"
-                        } hover:bg-purple-100 hover:text-purple-600`}
-                    >
-                      {sub}
-                    </button>
-                  ))}
-                  {selectedSubcategory && (
-                    <button
-                      className="text-xs ml-2 text-red-500 underline"
-                      onClick={() =>
-                        handleSubcategorySelect(category.slug, null)
-                      }
-                    >
-                      Clear Filter
-                    </button>
-                  )}
+                          } hover:bg-purple-100 hover:text-purple-600`}
+                      >
+                        {sub}
+                      </button>
+                    ))}
+                    {selectedSubcategory && (
+                      <button
+                        className="text-xs ml-2 text-red-500 underline"
+                        onClick={() =>
+                          handleSubcategorySelect(category.slug, null)
+                        }
+                      >
+                        Clear Filter
+                      </button>
+                    )}
+                  </div>
                 </div>
+                {filteredBuilders?.length > 4 && (
+                  <div className="flex justify-end mt-6 ">
+                    <Link
+                      className="text-purple-600 border border-purple-600 px-3 py-2 rounded-md hover:text-gray-800 text-sm font-medium"
+                      href={{
+                        pathname: `/explore-talent/${category.slug}`,
+                        query: selectedSubcategory ? { subcategory: selectedSubcategory } : {}
+                      }}>
+                      View All
+                    </Link>
+                  </div>
+                )}
               </div>
-
               {filteredBuilders?.length > 0 ? (
                 <>
                   <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
@@ -235,8 +248,8 @@ export default function ExploreTalent() {
                           <div className="flex items-center gap-2">
                             <span
                               className={`w-2 h-2 rounded-full ${talent.availability
-                                  ? "bg-green-500"
-                                  : "bg-red-500"
+                                ? "bg-green-500"
+                                : "bg-red-500"
                                 }`}
                             />
                             <span className="text-sm text-gray-600">
@@ -246,7 +259,7 @@ export default function ExploreTalent() {
                             </span>
                           </div>
                           <Link
-                            href={`/talent/${talent.id}`}
+                            href={`/portfolio-builder/${talent.id}`}
                             className="text-purple-600 hover:text-gray-800 text-sm font-medium"
                           >
                             View
@@ -255,18 +268,6 @@ export default function ExploreTalent() {
                       </div>
                     ))}
                   </div>
-                  {filteredBuilders?.length > 4 && (
-                    <div className="flex justify-end mt-6">
-                      <Link 
-                      className="text-purple-600 border border-purple-600 px-3 py-2 rounded-md hover:text-gray-800 text-sm font-medium"
-                      href={{
-                        pathname: `/explore-talent/${category.slug}`,
-                        query: selectedSubcategory ? { subcategory: selectedSubcategory } : {}
-                      }}>
-                        View All
-                      </Link>
-                    </div>
-                  )}
                 </>
               ) : (
                 <p className="text-gray-500 text-sm mt-4">

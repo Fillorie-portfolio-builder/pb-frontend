@@ -5,6 +5,8 @@ import { useSearchParams, useParams } from "next/navigation";
 import { getAllBuilders } from "../../api/builder";
 import { categories } from "../../utils/categories";
 import Link from "next/link";
+import { Button } from "../../components/ui/Button";
+import { useRouter } from "next/navigation";
 
 export default function ExploreTalentbycategory() {
   const { category } = useParams();
@@ -31,6 +33,7 @@ export default function ExploreTalentbycategory() {
   const currentBuilders = filteredBuilders.slice(indexOfFirstBuilder, indexOfLastBuilder);
 
   const paginate = (pageNumber) => setCurrentPage(pageNumber);
+  const router = useRouter();
 
   useEffect(() => {
     const fetchBuilders = async () => {
@@ -47,16 +50,29 @@ export default function ExploreTalentbycategory() {
   return (
     <div className="min-h-screen bg-[#FAF8FF] px-4 py-8">
       <div className="max-w-7xl mx-auto">
-        <h1 className="text-3xl font-bold mb-6">{currentCategory?.title || "Talents"}</h1>
-
+        <div className="flex items-center">
+          <div>
+            <Button
+              type="button"
+              variant="outline"
+              className="text-sm mb-6"
+              onClick={() => router.back()}
+            >
+              ← Back
+            </Button>
+          </div>
+          <div className="ml-6">
+            <h1 className="text-3xl font-bold mb-6">{currentCategory?.title || "Talents"}</h1>
+          </div>
+        </div>
         <div className="mb-6 flex flex-wrap gap-2 items-center">
           {currentCategory?.subcategories.map((sub, index) => (
             <button
               key={index}
               onClick={() => setActiveSubcategory(sub)}
               className={`px-3 py-1 rounded-full text-sm border ${activeSubcategory === sub
-                  ? "bg-purple-600 text-white"
-                  : "bg-white text-purple-600 border-purple-300"
+                ? "bg-purple-600 text-white"
+                : "bg-white text-purple-600 border-purple-300"
                 } hover:bg-purple-100 hover:text-purple-600`}
             >
               {sub}
@@ -119,7 +135,7 @@ export default function ExploreTalentbycategory() {
                       </span>
                     </span>
                     <Link
-                      href={`/talent/${talent.id}`}
+                      href={`/portfolio-builder/${talent.id}`}
                       className="text-sm text-purple-600 hover:text-gray-800 font-medium"
                     >
                       View
@@ -136,8 +152,8 @@ export default function ExploreTalentbycategory() {
                     onClick={() => paginate(currentPage > 1 ? currentPage - 1 : 1)}
                     disabled={currentPage === 1}
                     className={`px-4 py-2 rounded border ${currentPage === 1
-                        ? "bg-gray-200 text-gray-500 cursor-not-allowed"
-                        : "bg-white text-purple-600 hover:bg-purple-50 border-purple-600"
+                      ? "bg-gray-200 text-gray-500 cursor-not-allowed"
+                      : "bg-white text-purple-600 hover:bg-purple-50 border-purple-600"
                       }`}
                   >
                     Previous
@@ -148,8 +164,8 @@ export default function ExploreTalentbycategory() {
                       key={number}
                       onClick={() => paginate(number)}
                       className={`px-4 py-2 rounded border ${currentPage === number
-                          ? "bg-purple-600 text-white border-purple-600"
-                          : "bg-white text-purple-600 hover:bg-purple-50 border-gray-300"
+                        ? "bg-purple-600 text-white border-purple-600"
+                        : "bg-white text-purple-600 hover:bg-purple-50 border-gray-300"
                         }`}
                     >
                       {number}
@@ -160,8 +176,8 @@ export default function ExploreTalentbycategory() {
                     onClick={() => paginate(currentPage < totalPages ? currentPage + 1 : totalPages)}
                     disabled={currentPage === totalPages}
                     className={`px-4 py-2 rounded border ${currentPage === totalPages
-                        ? "bg-gray-200 text-gray-500 cursor-not-allowed"
-                        : "bg-white text-purple-600 hover:bg-purple-50 border-purple-600"
+                      ? "bg-gray-200 text-gray-500 cursor-not-allowed"
+                      : "bg-white text-purple-600 hover:bg-purple-50 border-purple-600"
                       }`}
                   >
                     Next
