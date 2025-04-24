@@ -10,6 +10,17 @@ export const getProjectById = async (id) => axios.get(`${API_BASE_URL}/project/$
 
 export const getAllProjects = async () => axios.get(`${API_BASE_URL}/project/`);
 
+export const markAsInterested = async (projectId, userId, newInterest) =>
+  axios.post(`${API_BASE_URL}/project/${projectId}/interested`, {
+    userId,
+    newInterest,
+  });
+
+export const assignBuilderToProject = (projectId, builderId) =>
+  axios.post(`${API_BASE_URL}/project/${projectId}/assign-builder`, {
+    builderId,
+  });
+
 
 axios.interceptors.request.use((config) => {
   const token = localStorage.getItem("token");
