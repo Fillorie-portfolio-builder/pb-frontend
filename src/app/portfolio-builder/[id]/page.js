@@ -129,42 +129,50 @@ export default function TalentProfile() {
           </div>
         </div>
 
-        {builder.portfolio && builder.portfolio.length > 0 && (
-          <section>
-            <div className="flex justify-between items-center mb-6">
-              <h2 className="text-2xl font-semibold">Portfolio</h2>
-            </div>
-            <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
-              {builder.portfolio.map((item, index) => (
-                <div
-                  key={index}
-                  className="bg-white rounded-lg overflow-hidden shadow-sm"
-                >
-                  <div className="aspect-square bg-gray-100 relative">
-                    <img
-                      src={item.image}
-                      alt={item.title}
-                      className="w-full h-full object-cover"
-                    />
+        {/* Portfolio Section (optional if included in API) */}
+        <div className="flex justify-center mt-10">
+            <div className="max-w-7xl w-full bg-white p-6 rounded-lg shadow">
+              {builder.projects.length > 0 && (
+                <>
+                  <h2 className="text-xl font-semibold mb-4">Projects</h2>
+                  <div className="grid md:grid-cols-3 gap-6">
+                    {builder.projects.map((project, index) => (
+                      <div
+                        key={index}
+                        className="bg-white p-6 rounded-lg shadow"
+                      >
+                        <h3 className="text-lg font-semibold">
+                          {project.projectName}
+                        </h3>
+                        <p className="text-gray-500 text-sm">
+                          {project.timeline || "⏳ Flexible Timeline"}
+                        </p>
+                        <div className="flex flex-wrap gap-2 mt-2">
+                          {project.technologies?.map((tag, i) => (
+                            <span
+                              key={i}
+                              className="bg-purple-200 text-purple-800 text-xs px-2 py-1 rounded-full"
+                            >
+                              {tag}
+                            </span>
+                          ))}
+                        </div>
+                        <p className="text-gray-600 mt-2 text-sm line-clamp-3">
+                          {project.description}
+                        </p>
+                        <p className="text-purple-600 font-medium mt-2 text-sm">
+                          {project.subcategory}
+                        </p>
+                        <Link href={`/project/${project.id}`} passHref>
+                          <Button className="mt-4 w-full">View Project</Button>
+                        </Link>
+                      </div>
+                    ))}
                   </div>
-                  <div className="p-4">
-                    <h3 className="font-semibold mb-2">{item.title}</h3>
-                    <p className="text-sm text-gray-600 mb-3">
-                      {item.description}
-                    </p>
-                    <Link
-                      href={item.link}
-                      className="text-sm text-purple-600 hover:text-purple-700"
-                      target="_blank"
-                    >
-                      Visit
-                    </Link>
-                  </div>
-                </div>
-              ))}
+                </>
+              )}
             </div>
-          </section>
-        )}
+          </div>
       </div>
 
       {/* Modal for Contact Info */}

@@ -2,11 +2,16 @@
 import Link from "next/link";
 import { useParams } from "next/navigation";
 import { useContext, useEffect, useState } from "react";
-import { getProjectById } from "../../api/project";
+import {
+  assignBuilderToProject,
+  getProjectById,
+  markAsInterested,
+} from "../../api/project";
+import { getBuilderById } from "../../api/builder";
 import { AuthContext } from "../../context/AuthContext";
 import { useRouter } from "next/navigation";
 import { Button } from "../../components/ui/Button";
-import { Star} from "lucide-react";
+import { Star, Edit2} from "lucide-react";
 
 export default function PortfolioPage() {
   const { id } = useParams();
@@ -14,27 +19,76 @@ export default function PortfolioPage() {
   const { user } = useContext(AuthContext);
   const [showInterestedDialog, setShowInterestedDialog] = useState(false);
   const router = useRouter();
+  const [hasMarkedInterest, setHasMarkedInterest] = useState(false);
+  const [contributor, setContributor] = useState(null);
 
   useEffect(() => {
     const projectDetails = async () => {
       if (!id) return;
+
       try {
-        const response = await getProjectById(id);
-        setProject(response.data);
+        const res = await getProjectById(id);
+        const data = res.data;
+        console.log("rkele", res.data);
+
+        // Get builder details for interested builder IDs
+        const builderDetails = await Promise.all(
+          (data.interestedBuilders || []).map((builderId) =>
+            getBuilderById(builderId).then((res) => res.data)
+          )
+        );
+
+        // Replace IDs with full builder objects
+        data.interestedBuilders = builderDetails;
+        setProject(data);
+
+        if (data.builderId) {
+          try {
+            const contributorData = await getBuilderById(data.builderId);
+            setContributor(contributorData.data);
+          } catch (err) {
+            console.error("Failed to fetch assigned builder details:", err);
+          }
+        }
+
+        if (user?.accountType === "builder") {
+          const isInterested = data.interestedBuilders.some(
+            (b) => b.id === user.id
+          );
+          setHasMarkedInterest(isInterested);
+        }
       } catch (error) {
         console.error("Failed to fetch project:", error);
       }
     };
-    projectDetails();
-  }, [id]);
 
-  const handleInterestedClick = () => {
+    projectDetails();
+  }, [id, user]);
+
+  const handleInterestedClick = async () => {
     if (user?.id === project.ownerId) {
       // Show dialog/modal
       setShowInterestedDialog(true);
     } else {
       // Builder: mark interest
-      markAsInterested(project.id, user.id); // you'd call your API here
+      try {
+        // 🔁 Toggle logic (replace with actual API)
+        const newInterest = !hasMarkedInterest;
+        setHasMarkedInterest(newInterest);
+
+        await markAsInterested(project.id, user.id, newInterest);
+      } catch (err) {
+        console.error("Interest update failed", err);
+      }
+    }
+  };
+
+  const handleAddToProject = async (builderId) => {
+    try {
+      await assignBuilderToProject(project.id, builderId);
+      setShowInterestedDialog(false);
+    } catch (err) {
+      console.error(err);
     }
   };
 
@@ -63,44 +117,44 @@ export default function PortfolioPage() {
           <div className="flex items-center gap-4">
             {/* Interested Section */}
             <Button
-              onClick={handleInterestedClick} // define below
-              className="flex items-center gap-1 px-3 py-1.5 bg-purple-100 text-purple-700 rounded-full hover:bg-purple-200 transition text-sm"
+              onClick={handleInterestedClick}
+              className={`flex items-center gap-1 px-3 py-1.5 text-sm rounded-full transition border shadow-sm
+                ${
+                  hasMarkedInterest
+                    ? "bg-purple-100 text-purple-700 border-purple-200 hover:bg-purple-100"
+                    : "bg-white text-black border-gray-300 hover:bg-white hover:text-black"
+                }`}
             >
-              <Star className="h-4 w-4 mr-2" />
-              Interested ({project?.interestedBuilders?.length || 0})
+              <Star
+                className={`h-4 w-4 mr-2 ${
+                  hasMarkedInterest ? "text-purple-700" : "text-black"
+                }`}
+              />
+              <span
+                className={`${
+                  hasMarkedInterest ? "text-purple-700" : "text-black"
+                }`}
+              >
+                {" "}
+                Interested ({project?.interestedBuilders?.length || 0})
+              </span>
             </Button>
 
             {/* Edit Button (Only for owner) */}
             {user?.id === project?.ownerId && (
-              <Link href="/project-owner/project">
-                <button className="text-sm bg-gray-100 px-3 py-1.5 rounded hover:bg-gray-200">
-                  ✏️ Edit
-                </button>
-              </Link>
+              <Button
+                onClick={() =>
+                  router.push(`/project-owner/project/${project.id}`)
+                }
+                className="flex items-center gap-1 px-3 py-1.5 text-sm bg-white text-black rounded-full border shadow-sm hover:bg-white hover:text-black hover:shadow-md"
+              >
+                <Edit2 className="h-4 w-4 mr-2 text-black" />
+                <span className="text-black">Edit</span>
+              </Button>
             )}
           </div>
         </div>
 
-        {/* Grid Layout */}
-        {/* <div className="grid md:grid-cols-3 gap-4"> */}
-          {/* Main Image */}
-          {/* <div className="md:col-span-2 bg-gray-200 rounded-lg h-106 flex items-center justify-center">
-            <span className="text-gray-400">Image</span>
-          </div> */}
-
-          {/* Gallery */}
-          {/* <div className="grid grid-cols-2 gap-4">
-            <div className="bg-gray-200 rounded-lg h-56 flex items-center justify-center">
-              <span className="text-gray-400">+</span>
-            </div>
-            <div className="bg-gray-200 rounded-lg h-56 flex items-center justify-center">
-              <span className="text-gray-400">+</span>
-            </div>
-            <div className="bg-gray-200 rounded-lg h-56 flex items-center justify-center col-span-2">
-              <span className="text-gray-400">+</span>
-            </div>
-          </div> */}
-        {/* </div> */}
 
         {/* Project Details */}
         <div className="mt-6 grid md:grid-cols-2 gap-6">
@@ -142,17 +196,33 @@ export default function PortfolioPage() {
             </div>
             <div className="bg-gray-100 rounded-lg p-4 mt-2">
               <h3 className="text-lg font-bold">Project Contributors</h3>
-              <div className="flex mt-2 -space-x-3">
-                {project?.contributors?.map((contributor, index) => (
-                  <img
-                    key={index}
-                    src={contributor.profileImage || "/default-avatar.png"}
-                    alt={contributor.firstName || "Contributor"}
-                    title={contributor.firstName}
-                    className="w-10 h-10 rounded-full border-2 border-white shadow"
-                  />
-                ))}
-              </div>
+              {contributor ? (
+                <div className="flex items-center gap-3 mt-2">
+                  <Link
+                    href={`/portfolio-builder/${contributor.id}`}
+                    className="flex items-center gap-3 hover:opacity-90"
+                  >
+                    {contributor.profileImage ? (
+                      <img
+                        src={contributor.profileImage}
+                        className="w-8 h-8 rounded-full object-cover"
+                        alt={contributor.firstName}
+                      />
+                    ) : (
+                      <div className="w-8 h-8 rounded-full bg-purple-100 text-purple-700 flex items-center justify-center text-sm font-semibold">
+                        {contributor.firstName?.[0]}
+                      </div>
+                    )}
+                    <span className="text-sm font-medium text-black">
+                      {contributor.firstName} {contributor.lastName}
+                    </span>
+                  </Link>
+                </div>
+              ) : (
+                <p className="text-gray-500 text-sm mt-1">
+                  No contributor assigned yet.
+                </p>
+              )}
             </div>
           </div>
         </div>
@@ -160,19 +230,50 @@ export default function PortfolioPage() {
       {showInterestedDialog && (
         <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50">
           <div className="bg-white p-6 rounded-lg max-w-md w-full">
-            <h2 className="text-lg font-semibold mb-4">Interested</h2>
+            <h2 className="text-lg font-semibold mb-4">Interested Builders</h2>
+
             {project.interestedBuilders?.length > 0 ? (
-              <ul className="space-y-2">
+              <ul className="space-y-3">
                 {project.interestedBuilders.map((builder) => (
-                  <li key={builder.id} className="flex items-center gap-3">
-                    <img
-                      src={builder.profileImage || "/default-avatar.png"}
-                      className="w-8 h-8 rounded-full"
-                      alt={builder.firstName}
-                    />
-                    <span>
-                      {builder.firstName} {builder.lastName}
-                    </span>
+                  <li
+                    key={builder.id}
+                    className="flex items-center justify-between"
+                  >
+                    <Link
+                      href={`/portfolio-builder/${builder.id}`}
+                      className="flex items-center gap-3 hover:opacity-90"
+                    >
+                      {builder.profileImage ? (
+                        <img
+                          src={builder.profileImage}
+                          className="w-8 h-8 rounded-full object-cover"
+                          alt={builder.firstName}
+                        />
+                      ) : (
+                        <div className="w-8 h-8 rounded-full bg-purple-100 text-purple-700 flex items-center justify-center text-sm font-semibold">
+                          {builder.firstName?.[0]}
+                        </div>
+                      )}
+                      <span className="text-sm font-medium text-black">
+                        {builder.firstName} {builder.lastName}
+                      </span>
+                    </Link>
+
+                    {project.builderId === builder.id ? (
+                      <button
+                        className="text-xs bg-gray-300 text-gray-600 px-3 py-1 rounded cursor-not-allowed"
+                        disabled
+                      >
+                        Added to Project
+                      </button>
+                    ) : (
+                      <button
+                        onClick={() => handleAddToProject(builder.id)}
+                        className="text-xs bg-purple-600 text-white px-3 py-1 rounded hover:bg-purple-700 transition"
+                      >
+                        Add to Project
+                      </button>
+                    )}
                   </li>
                 ))}
               </ul>
@@ -181,9 +282,10 @@ export default function PortfolioPage() {
                 No one has shown interest yet.
               </p>
             )}
+
             <button
               onClick={() => setShowInterestedDialog(false)}
-              className="mt-4 text-purple-600 hover:underline"
+              className="mt-6 text-purple-600 hover:underline text-sm"
             >
               Close
             </button>
