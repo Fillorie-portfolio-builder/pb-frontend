@@ -4,8 +4,11 @@ import Link from "next/link";
 import { Button } from "../../components/ui/Button";
 import { Star, LinkedinIcon, X } from "lucide-react";
 import { useParams } from "next/navigation";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useContext } from "react";
 import { getBuilderById } from "../../api/builder";
+import { getOwnerById } from "../../api/owner";
+import { AuthContext } from "../../context/AuthContext";
+import { createReview, getReviewsByBuilder } from "../../api/review";
 
 function Modal({ isOpen, onClose, children }) {
   if (!isOpen) return null;
@@ -25,30 +28,117 @@ function Modal({ isOpen, onClose, children }) {
 }
 
 export default function TalentProfile() {
+  const { user } = useContext(AuthContext);
   const params = useParams();
   const builderId = params.id;
   const [builder, setBuilder] = useState(null);
+  const [owner, setOwner] = useState(null);
   const [isOpen, setIsOpen] = useState(false);
   const [isOpenReview, setIsOpenReview] = useState(false);
+  const [rating, setRating] = useState(0);
+  const [reviewText, setReviewText] = useState("");
+  const [reviews, setReviews] = useState([]);
 
   useEffect(() => {
     const fetchBuilder = async () => {
+      if (!builderId) return;
+      // console.log("Fetching builder with ID:", builderId);
       try {
         const res = await getBuilderById(builderId);
+        // console.log("Builder user data:", res.data);
         setBuilder(res.data);
       } catch (err) {
         console.error("Error fetching builder:", err);
       }
     };
 
-    if (builderId) {
-      fetchBuilder();
-    }
+    fetchBuilder();
   }, [builderId]);
+
+  useEffect(() => {
+    const fetchUserData = async () => {
+      if (!user) return;
+      // console.log("Fetching user with ID:", user);
+      try {
+        if (user.accountType === "builder") {
+          const res = await getBuilderById(user.id);
+          // console.log("Builder data (user):", res.data);
+          setBuilder(res.data);
+        } else if (user.accountType === "owner") {
+          const res = await getOwnerById(user.id);
+          // console.log("Owner data (user):", res.data);
+          setOwner(res.data);
+        }
+      } catch (err) {
+        console.error("Error fetching user data:", err);
+      }
+    };
+
+    fetchUserData();
+  }, [user]);
+
+  const fetchReviews = async () => {
+    if (!builderId) return;
+    try {
+      const res = await getReviewsByBuilder(builderId);
+      setReviews(res.data);
+      // console.log("Review Data", res.data);
+    } catch (err) {
+      console.error("Error fetching reviews:", err);
+    }
+  };
+
+  useEffect(() => {
+    fetchReviews();
+  }, [builderId]);
+
+
+  const handleReviewSubmit = async () => {
+    try {
+      if (!owner || !owner.id) {
+        alert("You must be logged in to submit a review.");
+        return;
+      }
+      if (!builderId) {
+        alert("Builder ID is missing.");
+        return;
+      }
+      if (rating === 0) {
+        alert("Please select a rating (1-5 stars).");
+        return;
+      }
+      if (!reviewText.trim()) {
+        alert("Please write something in the review.");
+        return;
+      }
+
+      const data = {
+        builderId: builderId,
+        ownerId: owner.id,
+        reviewStars: rating,
+        reviewText: reviewText,
+      };
+
+      // console.log("Submitting review with data:", data);
+      const response = await createReview(data);
+      // console.log("Review submission response:", response);
+      alert("Review submitted successfully!");
+      setIsOpenReview(false);
+      setRating(0);
+      setReviewText("");
+      fetchReviews();
+    } catch (error) {
+      console.error("Error creating review:", error);
+      alert("Failed to submit review.");
+    }
+  };
 
   if (!builder) {
     return <div className="text-center py-20">Loading profile...</div>;
   }
+
+  const totalReviews = reviews.length;
+  const averageRating = reviews?.length ? parseFloat((reviews.reduce((sum, r) => sum + (Number(r.reviewStars) || 0), 0) / reviews.length).toFixed(1)) : 0.0;
   return (
     <div className="min-h-screen bg-[#FAF8FF]">
       <div className="max-w-4xl mx-auto px-4 py-8">
@@ -73,8 +163,8 @@ export default function TalentProfile() {
             <p className="text-gray-600 mb-4">{builder.profession}</p>
             <div className="flex items-center gap-1 mb-2">
               <Star className="h-4 w-4 fill-yellow-400 text-yellow-400" />
-              <span className="font-medium">{builder.rating || "0.0"}</span>
-              <span className="text-gray-600 text-sm">({builder.reviewCount || 0} reviews)</span>
+              <span>{isNaN(averageRating) ? "N/A" : averageRating}</span>
+              <span className="text-gray-600 text-sm">({totalReviews} reviews)</span>
             </div>
             <p className="text-gray-600 text-sm mb-4">
               {builder.projectsCompleted || 0} Projects Completed
@@ -83,9 +173,11 @@ export default function TalentProfile() {
               <Button onClick={() => setIsOpen(true)}>
                 Contact
               </Button>
-              <button onClick={() => setIsOpenReview(true)} className="bg-purple-600 text-white px-5 py-2 mb-3 rounded hover:bg-purple-700 transition w-full">
-                Give a Review
-              </button>
+              {user.accountType === "owner" && (
+                <button onClick={() => setIsOpenReview(true)} className="bg-purple-600 text-white px-5 py-2 mb-3 rounded hover:bg-purple-700 transition w-full">
+                  Give a Review
+                </button>
+              )}
               {builder.linkedin && (
                 <a href={builder.linkedin} target="_blank" rel="noreferrer">
                   <Button variant="outline" className="w-full">
@@ -189,22 +281,31 @@ export default function TalentProfile() {
       <Modal isOpen={isOpenReview} onClose={() => setIsOpenReview(false)} className="w-full">
         <div className="flex flex-col items-center">
           <h2 className="text-xl font-semibold mb-4">Give a Review </h2>
-          <div className="flex items-center gap-1 mb-2">
-            <Star className="h-4 w-4 fill-yellow-400 text-yellow-400" />
-            <Star className="h-4 w-4 fill-yellow-400 text-yellow-400" />
-            <Star className="h-4 w-4 fill-yellow-400 text-yellow-400" />
-            <Star className="h-4 w-4 fill-yellow-400 text-yellow-400" />
-            <Star className="h-4 w-4 fill-yellow-400 text-yellow-400" />
+          <div className="flex items-center gap-1 mb-4">
+            {[1, 2, 3, 4, 5].map((star) => (
+              <Star
+                key={star}
+                className={`h-6 w-6 cursor-pointer ${rating >= star ? "fill-yellow-400 text-yellow-400" : "text-gray-300"}`}
+                onClick={() => {
+                  setRating(star);
+                  console.log("New rating:", star);
+                }}
+              />
+            ))}
           </div>
-          <div className="w-full mb-4">
-            <input
-              type="text"
-              placeholder="Write a review..."
-              className="border border-gray-300 rounded-lg p-2 mb-4 w-full" />
-          </div>
-          <div className="">
-            <button className="w-full px-5 py-3 bg-gray-500 rounded-lg text-white hover:bg-gray-700 font-semibold" type="submit">Submit a review</button>
-          </div>
+          <input
+            type="text"
+            placeholder="Write a review..."
+            className="border border-gray-300 rounded-lg p-2 mb-4 w-full"
+            value={reviewText}
+            onChange={(e) => setReviewText(e.target.value)}
+          />
+          <button
+            className="w-full px-5 py-3 bg-gray-500 rounded-lg text-white hover:bg-gray-700 font-semibold"
+            onClick={handleReviewSubmit}
+          >
+            Submit a review
+          </button>
         </div>
       </Modal>
     </div>
