@@ -178,7 +178,7 @@ export default function TalentProfile() {
               </Button>
               {user?.accountType === "owner" && (
                 <button onClick={() => setIsOpenReview(true)} className="bg-purple-600 text-white px-5 py-2 mb-3 rounded hover:bg-purple-700 transition w-full">
-                  Give a Review
+                  Rate & Review
                 </button>
               )}
               {builder.linkedin && (
@@ -227,7 +227,7 @@ export default function TalentProfile() {
         {/* Portfolio Section (optional if included in API) */}
         <div className="flex justify-center mt-10">
             <div className="max-w-7xl w-full bg-white p-6 rounded-lg shadow">
-              {builder.projects.length > 0 && (
+              {builder.projects.length > 0 ? (
                 <>
                   <h2 className="text-xl font-semibold mb-4">Projects</h2>
                   <div className="grid md:grid-cols-3 gap-6">
@@ -265,6 +265,8 @@ export default function TalentProfile() {
                     ))}
                   </div>
                 </>
+              ):(
+                <div className="text-center text-gray-500">No Projects</div>
               )}
             </div>
           </div>
@@ -317,7 +319,7 @@ export default function TalentProfile() {
 
       <Modal isOpen={isOpenReview} onClose={() => setIsOpenReview(false)} className="w-full">
         <div className="flex flex-col items-center">
-          <h2 className="text-xl font-semibold mb-4">Give a Review </h2>
+          <h2 className="text-xl font-semibold mb-4">Rate & Review</h2>
           <div className="flex items-center gap-1 mb-4">
             {[1, 2, 3, 4, 5].map((star) => (
               <Star

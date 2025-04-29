@@ -10,6 +10,8 @@ export const getProjectById = async (id) => axios.get(`${API_BASE_URL}/project/$
 
 export const getAllProjects = async () => axios.get(`${API_BASE_URL}/project/`);
 
+export const updateProject = async (id, data) => axios.put(`${API_BASE_URL}/project/${id}`, data);
+
 export const markAsInterested = async (projectId, userId, newInterest) =>
   axios.post(`${API_BASE_URL}/project/${projectId}/interested`, {
     userId,
