@@ -6,12 +6,14 @@ import {
   assignBuilderToProject,
   getProjectById,
   markAsInterested,
+  markProjectCompletedByBuilder,
+  confirmProjectCompletionByOwner
 } from "../../api/project";
 import { getBuilderById } from "../../api/builder";
 import { AuthContext } from "../../context/AuthContext";
 import { useRouter } from "next/navigation";
 import { Button } from "../../components/ui/Button";
-import { Star, Edit2} from "lucide-react";
+import { Star, Edit2 } from "lucide-react";
 
 export default function PortfolioPage() {
   const { id } = useParams();
@@ -92,6 +94,30 @@ export default function PortfolioPage() {
     }
   };
 
+  const markProjectCompleted = async () => {
+    try {
+      if (!user?.id) {
+        console.error("User ID missing");
+        return;
+      }
+      await markProjectCompletedByBuilder(project.id, user.id);
+    } catch (err) {
+      console.error("Failed to mark project as completed", err);
+    }
+  };
+
+  const confirmProjectCompletion = async () => {
+    try {
+      if (!user?.id) {
+        console.error("User ID missing");
+        return;
+      }
+      await confirmProjectCompletionByOwner(project.id, user.id);
+    } catch (err) {
+      console.error("Failed to mark project as completed", err);
+    }
+  };
+
   return (
     <div className="min-h-screen bg-gradient-to-b from-purple-50 to-white px-6 py-8">
       {/* Back to Portfolio Link */}
@@ -119,38 +145,59 @@ export default function PortfolioPage() {
             <Button
               onClick={handleInterestedClick}
               className={`flex items-center gap-1 px-3 py-1.5 text-sm rounded-full transition border shadow-sm
-                ${
-                  hasMarkedInterest
-                    ? "bg-purple-100 text-purple-700 border-purple-200 hover:bg-purple-100"
-                    : "bg-white text-black border-gray-300 hover:bg-white hover:text-black"
+                ${hasMarkedInterest
+                  ? "bg-purple-100 text-purple-700 border-purple-200 hover:bg-purple-100"
+                  : "bg-white text-black border-gray-300 hover:bg-white hover:text-black"
                 }`}
             >
               <Star
-                className={`h-4 w-4 mr-2 ${
-                  hasMarkedInterest ? "text-purple-700" : "text-black"
-                }`}
+                className={`h-4 w-4 mr-2 ${hasMarkedInterest ? "text-purple-700" : "text-black"
+                  }`}
               />
               <span
-                className={`${
-                  hasMarkedInterest ? "text-purple-700" : "text-black"
-                }`}
+                className={`${hasMarkedInterest ? "text-purple-700" : "text-black"
+                  }`}
               >
                 {" "}
                 Interested ({project?.interestedBuilders?.length || 0})
               </span>
             </Button>
 
+            {user?.id === project?.builderId && (
+              <Button
+                className="bg-purple-500 text-white border-purple-500 hover:bg-purple-100 hover:text-black"
+                onClick={() => {
+                  console.log(project.id, user.id);
+                  markProjectCompleted(project.id, user.id);
+                }}
+                disabled={!project || project.completionStatus === 'completed_by_builder'}
+              >
+                Complete
+              </Button>
+            )}
+
             {/* Edit Button (Only for owner) */}
             {user?.id === project?.ownerId && (
-              <Button
-                onClick={() =>
-                  router.push(`/project-owner/project/${project.id}`)
-                }
-                className="flex items-center gap-1 px-3 py-1.5 text-sm bg-white text-black rounded-full border shadow-sm hover:bg-white hover:text-black hover:shadow-md"
-              >
-                <Edit2 className="h-4 w-4 mr-2 text-black" />
-                <span className="text-black">Edit</span>
-              </Button>
+              <>
+                <Button
+                  onClick={() =>
+                    router.push(`/project-owner/project/${project.id}`)
+                  }
+                  className="flex items-center gap-1 px-3 py-1.5 text-sm bg-white text-black rounded-full border shadow-sm hover:bg-white hover:text-black hover:shadow-md"
+                >
+                  <Edit2 className="h-4 w-4 mr-2 text-black" />
+                  <span className="text-black">Edit</span>
+                </Button>
+                {project && (project.completionStatus === 'completed_by_builder' || project.completionStatus === 'confirmed_by_owner') && (
+                  <Button
+                    className="bg-purple-500 text-white border-purple-500 hover:bg-purple-100 hover:text-black"
+                    onClick={confirmProjectCompletion}
+                    disabled={project.completionStatus === 'confirmed_by_owner'}
+                  >
+                    Complete
+                  </Button>
+                )}
+              </>
             )}
           </div>
         </div>

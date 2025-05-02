@@ -23,6 +23,10 @@ export const assignBuilderToProject = (projectId, builderId) =>
     builderId,
   });
 
+export const markProjectCompletedByBuilder = async (id, builderId) => axios.put(`${API_BASE_URL}/project/${id}/mark-completed`, { builderId });
+
+export const confirmProjectCompletionByOwner = async (id, ownerId) => axios.put(`${API_BASE_URL}/project/${id}/confirm-completion`, { ownerId });
+
 
 axios.interceptors.request.use((config) => {
   const token = localStorage.getItem("token");
