@@ -170,7 +170,7 @@ export default function PortfolioPage() {
                   console.log(project.id, user.id);
                   markProjectCompleted(project.id, user.id);
                 }}
-                disabled={!project || project.completionStatus === 'completed_by_builder'}
+                disabled={!project || project.completionStatus === 'confirmed_by_owner'}
               >
                 Complete
               </Button>
