@@ -1,6 +1,7 @@
 import Navbar from "./components/Navbar";
 import { SendToBack, Share2 } from "lucide-react";
 import { Button } from "./components/ui/Button";
+import Link from "next/link";
 
 export default function Home() {
   return (
@@ -18,14 +19,22 @@ export default function Home() {
           Launchpad!
         </p>
         <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
-          <Button className="px-8 py-6 text-lg">
-            <SendToBack className="mr-2 h-5 w-5" />
-            Gain Experience
-          </Button>
-          <Button variant="outline" className="px-8 py-6 text-lg">
-            <Share2 className="mr-2 h-5 w-5" />
-            Post My Project
-          </Button>
+          <Link
+            href="/sign-up"
+          >
+            <Button className="px-8 py-6 text-lg">
+              <SendToBack className="mr-2 h-5 w-5" />
+              Gain Experience
+            </Button>
+          </Link>
+          <Link
+            href="/sign-up"
+          >
+            <Button variant="outline" className="px-8 py-6 text-lg">
+              <Share2 className="mr-2 h-5 w-5" />
+              Post My Project
+            </Button>
+          </Link>
         </div>
       </section>
       <section className="py-20 px-4">
@@ -87,7 +96,7 @@ export default function Home() {
         </div>
       </section> */}
 
-      
+
     </div>
   );
 }
