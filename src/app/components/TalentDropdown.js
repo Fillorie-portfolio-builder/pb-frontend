@@ -55,9 +55,7 @@ export default function TalentDropdown() {
                   {category.subcategories.map((subcategory) => (
                     <li key={subcategory}>
                       <Link
-                        href={`/explore-talent/${category.slug}/${subcategory
-                          .toLowerCase()
-                          .replace(/\s+/g, "-")}`}
+                        href={`/explore-talent/${category.slug}`}
                         className="text-gray-600 hover:text-gray-900"
                       >
                         {subcategory}
