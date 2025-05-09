@@ -16,7 +16,7 @@ export default function ExploreTalentbycategory() {
   const [builders, setBuilders] = useState([]);
   const [activeSubcategory, setActiveSubcategory] = useState(selectedSubcategory || null);
   const [currentPage, setCurrentPage] = useState(1);
-  const [projectsPerPage] = useState(4);//
+  const [projectsPerPage] = useState(8);
 
   const currentCategory = categories.find((cat) => cat.slug === category);
 
