@@ -176,6 +176,13 @@ export default function TalentProfile() {
               <Button onClick={() => setIsOpen(true)}>
                 Contact
               </Button>
+              {user?.accountType === "builder" && (
+                <Link href={`/portfolio-builder/sign-up/${builderId}`}>
+                  <button className="bg-purple-600 text-white px-5 py-2 mb-3 rounded hover:bg-purple-700 transition w-full">
+                    Edit Profile
+                  </button>
+                </Link>
+              )}
               {user?.accountType === "owner" && (
                 <button onClick={() => setIsOpenReview(true)} className="bg-purple-600 text-white px-5 py-2 mb-3 rounded hover:bg-purple-700 transition w-full">
                   Rate & Review
