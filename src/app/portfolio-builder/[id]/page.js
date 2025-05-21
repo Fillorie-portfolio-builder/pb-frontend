@@ -38,7 +38,7 @@ export default function TalentProfile() {
   const [rating, setRating] = useState(0);
   const [reviewText, setReviewText] = useState("");
   const [reviews, setReviews] = useState([]);
-  const [ownername , setOwnername] = useState("")
+  const [ownername, setOwnername] = useState("")
 
   useEffect(() => {
     const fetchBuilder = async () => {
@@ -117,7 +117,7 @@ export default function TalentProfile() {
       const data = {
         builderId: builderId,
         ownerId: owner.id,
-        ownername:ownername,
+        ownername: ownername,
         reviewStars: rating,
         reviewText: reviewText,
       };
@@ -219,57 +219,59 @@ export default function TalentProfile() {
 
             <section className="mb-8">
               <h2 className="text-xl font-semibold mb-4">Availability</h2>
-              <p className="text-gray-600">{builder.availability}</p>
+              <p className="text-gray-600">
+                {builder.availability ? "Available" : "Not Available"}
+              </p>
             </section>
           </div>
         </div>
 
         {/* Portfolio Section (optional if included in API) */}
         <div className="flex justify-center mt-10">
-            <div className="max-w-7xl w-full bg-white p-6 rounded-lg shadow">
-              {builder.projects.length > 0 ? (
-                <>
-                  <h2 className="text-xl font-semibold mb-4">Projects</h2>
-                  <div className="grid md:grid-cols-3 gap-6">
-                    {builder.projects.map((project, index) => (
-                      <div
-                        key={index}
-                        className="bg-white p-6 rounded-lg shadow"
-                      >
-                        <h3 className="text-lg font-semibold">
-                          {project.projectName}
-                        </h3>
-                        <p className="text-gray-500 text-sm">
-                          {project.timeline || "⏳ Flexible Timeline"}
-                        </p>
-                        <div className="flex flex-wrap gap-2 mt-2">
-                          {project.technologies?.map((tag, i) => (
-                            <span
-                              key={i}
-                              className="bg-purple-200 text-purple-800 text-xs px-2 py-1 rounded-full"
-                            >
-                              {tag}
-                            </span>
-                          ))}
-                        </div>
-                        <p className="text-gray-600 mt-2 text-sm line-clamp-3">
-                          {project.description}
-                        </p>
-                        <p className="text-purple-600 font-medium mt-2 text-sm">
-                          {project.subcategory}
-                        </p>
-                        <Link href={`/project/${project.id}`} passHref>
-                          <Button className="mt-4 w-full">View Project</Button>
-                        </Link>
+          <div className="max-w-7xl w-full bg-white p-6 rounded-lg shadow">
+            {builder.projects.length > 0 ? (
+              <>
+                <h2 className="text-xl font-semibold mb-4">Projects</h2>
+                <div className="grid md:grid-cols-3 gap-6">
+                  {builder.projects.map((project, index) => (
+                    <div
+                      key={index}
+                      className="bg-white p-6 rounded-lg shadow"
+                    >
+                      <h3 className="text-lg font-semibold">
+                        {project.projectName}
+                      </h3>
+                      <p className="text-gray-500 text-sm">
+                        {project.timeline || "⏳ Flexible Timeline"}
+                      </p>
+                      <div className="flex flex-wrap gap-2 mt-2">
+                        {project.technologies?.map((tag, i) => (
+                          <span
+                            key={i}
+                            className="bg-purple-200 text-purple-800 text-xs px-2 py-1 rounded-full"
+                          >
+                            {tag}
+                          </span>
+                        ))}
                       </div>
-                    ))}
-                  </div>
-                </>
-              ):(
-                <div className="text-center text-gray-500">No Projects</div>
-              )}
-            </div>
+                      <p className="text-gray-600 mt-2 text-sm line-clamp-3">
+                        {project.description}
+                      </p>
+                      <p className="text-purple-600 font-medium mt-2 text-sm">
+                        {project.subcategory}
+                      </p>
+                      <Link href={`/project/${project.id}`} passHref>
+                        <Button className="mt-4 w-full">View Project</Button>
+                      </Link>
+                    </div>
+                  ))}
+                </div>
+              </>
+            ) : (
+              <div className="text-center text-gray-500">No Projects</div>
+            )}
           </div>
+        </div>
       </div>
 
       <div className="flex justify-center mt-4 mx-6">

@@ -49,11 +49,11 @@ const ExploreProjects = () => {
           <div >
             <h1 className="text-3xl font-bold">Explore Projects</h1>
           </div>
-          <div>
+          <div className="relative">
             <select
               id="categories"
               name="categories"
-              className="p-2 border border-gray-300 rounded"
+              className="appearance-none p-3  border border-gray-300 rounded"
               value={selectedCategory}
               onChange={(e) => setSelectedCategory(e.target.value)}
             >
@@ -65,6 +65,11 @@ const ExploreProjects = () => {
               <option value="marketing-sales">Marketing & Sales</option>
               <option value="data-analytics">Data & Analytics</option>
             </select>
+            <div className="pointer-events-none absolute inset-y-0 right-3 flex items-center">
+              <svg className="w-4 h-4 text-gray-600" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" d="M19 9l-7 7-7-7" />
+              </svg>
+            </div>
           </div>
         </div>
         {currentProjects.length === 0 ? (

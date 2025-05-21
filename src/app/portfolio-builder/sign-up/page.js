@@ -15,7 +15,7 @@ export default function PortfolioBuilderSignup() {
     mobile: "",
     profession: "",
     bio: "",
-    education: "",
+    educationalBackground: "",
     skills: [],
     jobTypes: "",
     availability: "",
@@ -249,7 +249,7 @@ export default function PortfolioBuilderSignup() {
               />
             </div>
             <div>
-              <label className="block text-gray-700 mb-1">Mobile</label>
+              <label className="block text-gray-700 mb-1">Phone Number</label>
               <input
                 type="text"
                 name="mobile"
@@ -272,7 +272,7 @@ export default function PortfolioBuilderSignup() {
               />
             </div>
 
-            <div>
+            {/* <div>
               <label className="block text-gray-700 mb-1">Job Type</label>
               <select
                 name="jobTypes"
@@ -287,7 +287,7 @@ export default function PortfolioBuilderSignup() {
                   </option>
                 ))}
               </select>
-            </div>
+            </div> */}
 
             <div>
               <label className="block text-gray-700 mb-1">Availability</label>
@@ -312,8 +312,8 @@ export default function PortfolioBuilderSignup() {
                 Educational Background
               </label>
               <textarea
-                name="education"
-                value={formData.education}
+                name="educationalBackground"
+                value={formData.educationalBackground}
                 className="border p-3 rounded-md w-full"
                 onChange={handleChange}
               ></textarea>
