@@ -13,3 +13,7 @@ export const updateEmail = async (id, data) => {
 export const updatePassword = async (id, data) => {
     return axios.put(`${API_BASE_URL}/settings/updatePassword/${id}`, data);
 };
+
+export const updateBuilder = async (id, data) => {
+    return axios.put(`${API_BASE_URL}/settings/update-builder-details/${id}`, data);
+}  
