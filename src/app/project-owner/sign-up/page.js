@@ -154,7 +154,7 @@ export default function ProjectOwnerSignup() {
               />
             </div>
             <div>
-              <label className="block text-gray-700 mb-1">Mobile</label>
+              <label className="block text-gray-700 mb-1">Phone Number</label>
               <input
                 type="text"
                 name="mobile"
@@ -208,7 +208,7 @@ export default function ProjectOwnerSignup() {
             </div>
 
             {/* Offers - Input as chips */}
-            <div className="col-span-2">
+            {/* <div className="col-span-2">
               <label className="block text-gray-700 mb-1">
                 What services do you offer?
               </label>
@@ -234,7 +234,7 @@ export default function ProjectOwnerSignup() {
                   </span>
                 ))}
               </div>
-            </div>
+            </div> */}
           </div>
 
           <div className="mt-6 text-center">
