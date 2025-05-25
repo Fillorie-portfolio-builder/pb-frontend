@@ -6,7 +6,7 @@ export default function StartJourney() {
   return (
     <div className="min-h-screen bg-[#FAF8FF] flex flex-col items-center justify-center p-4">
       <div className="max-w-4xl w-full text-center mb-12">
-        <h1 className="text-4xl font-bold text-purple-600 mb-4">Start Your Journey</h1>
+        <h1 className="text-4xl font-bold text-[#3C65F5] mb-4">Start Your Journey</h1>
         <p className="text-gray-600 text-lg">Choose how you want to be part of our community</p>
       </div>
 
@@ -14,7 +14,7 @@ export default function StartJourney() {
         {/* Project Owner Card */}
         <div className="bg-white p-8 rounded-xl shadow-sm hover:shadow-md transition-shadow">
           <div className="w-12 h-12 bg-purple-100 rounded-lg flex items-center justify-center mb-6">
-            <Building2 className="h-6 w-6 text-purple-600" />
+            <Building2 className="h-6 w-6 text-[#3C65F5]" />
           </div>
           <h2 className="text-xl font-semibold mb-4">Project Owner</h2>
           <p className="text-gray-600 mb-6">
@@ -23,7 +23,7 @@ export default function StartJourney() {
           </p>
           <Link
             href="/signup/project-owner"
-            className="inline-flex items-center text-purple-600 hover:text-purple-700 font-medium"
+            className="inline-flex items-center text-[#3C65F5] hover:text-[#E1E7FE] font-medium"
           >
             Get Started
             <ArrowRight className="ml-2 h-4 w-4" />
@@ -33,7 +33,7 @@ export default function StartJourney() {
         {/* Portfolio Builder Card */}
         <div className="bg-white p-8 rounded-xl shadow-sm hover:shadow-md transition-shadow">
           <div className="w-12 h-12 bg-purple-100 rounded-lg flex items-center justify-center mb-6">
-            <User2 className="h-6 w-6 text-purple-600" />
+            <User2 className="h-6 w-6 text-[#3C65F5]" />
           </div>
           <h2 className="text-xl font-semibold mb-4">Portfolio Builder</h2>
           <p className="text-gray-600 mb-6">
@@ -41,7 +41,7 @@ export default function StartJourney() {
           </p>
           <Link
             href="/signup/portfolio-builder"
-            className="inline-flex items-center text-purple-600 hover:text-purple-700 font-medium"
+            className="inline-flex items-center text-[#3C65F5] hover:text-[#E1E7FE] font-medium"
           >
             Get Started
             <ArrowRight className="ml-2 h-4 w-4" />
@@ -55,7 +55,7 @@ export default function StartJourney() {
         </Button>
         <p className="text-gray-600">
           Already have an account?{" "}
-          <Link href="/signin" className="text-purple-600 hover:text-purple-700">
+          <Link href="/signin" className="text-[#3C65F5] hover:text-[#E1E7FE]">
             Sign in
           </Link>
         </p>

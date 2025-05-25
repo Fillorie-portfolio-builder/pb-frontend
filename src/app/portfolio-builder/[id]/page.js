@@ -155,7 +155,7 @@ export default function TalentProfile() {
                   className="w-full h-full object-cover"
                 />
               ) : (
-                <span className="text-6xl text-purple-600 flex items-center justify-center h-full">
+                <span className="text-6xl text-[#3C65F5] flex items-center justify-center h-full">
                   {builder.firstName?.charAt(0)}
                 </span>
               )}
@@ -264,7 +264,7 @@ export default function TalentProfile() {
                       <p className="text-gray-600 mt-2 text-sm line-clamp-3">
                         {project.description}
                       </p>
-                      <p className="text-purple-600 font-medium mt-2 text-sm">
+                      <p className="text-[#3C65F5] font-medium mt-2 text-sm">
                         {project.subcategory}
                       </p>
                       <Link href={`/project/${project.id}`} passHref>

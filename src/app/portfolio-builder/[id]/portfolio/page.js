@@ -9,7 +9,7 @@ export default function PortfolioPage() {
       <div className="bg-white shadow-md rounded-lg p-6 max-w-7xl mx-auto">
         <Link
           href="/portfolio"
-          className="text-purple-600 text-sm mb-4 inline-block"
+          className="text-[#3C65F5] text-sm mb-4 inline-block"
         >
           &larr; Back to Portfolio
         </Link>
@@ -59,7 +59,7 @@ export default function PortfolioPage() {
             <h2 className="font-semibold text-lg mt-4">Project Links</h2>
             <Link
               href="https://example.com"
-              className="text-purple-600 underline mt-1 block"
+              className="text-[#3C65F5] underline mt-1 block"
             >
               example.com
             </Link>

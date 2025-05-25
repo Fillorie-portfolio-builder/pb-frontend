@@ -55,7 +55,7 @@ export default function CreatePortfolioProject() {
   return (
     <div className="min-h-screen flex items-center justify-center bg-[#FAF8FF] p-6">
       <div className="bg-white p-8 rounded-lg shadow-lg max-w-4xl w-full">
-        <h1 className="text-3xl font-bold text-purple-600 text-center mb-6">
+        <h1 className="text-3xl font-bold text-[#3C65F5] text-center mb-6">
           Create Portfolio Project
         </h1>
         <form onSubmit={handleSubmit} className="space-y-6">

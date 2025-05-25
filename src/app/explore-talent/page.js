@@ -164,8 +164,8 @@ export default function ExploreTalent() {
                         }
                         className={`px-3 py-1 rounded-full text-sm border ${selectedSubcategory === sub
                           ? "bg-purple-600 text-white"
-                          : "bg-white text-purple-600 border-purple-300"
-                          } hover:bg-purple-100 hover:text-purple-600`}
+                          : "bg-white text-[#3C65F5] border-purple-300"
+                          } hover:bg-purple-100 hover:text-[#3C65F5]`}
                       >
                         {sub}
                       </button>
@@ -185,7 +185,7 @@ export default function ExploreTalent() {
                 {filteredBuilders?.length > 4 && (
                   <div className="flex justify-end mt-6 ">
                     <Link
-                      className="text-purple-600 border border-purple-600 px-3 py-2 rounded-md hover:text-gray-800 text-sm font-medium"
+                      className="text-[#3C65F5] border border-purple-600 px-3 py-2 rounded-md hover:text-gray-800 text-sm font-medium"
                       href={{
                         pathname: `/explore-talent/${category.slug}`,
                         query: selectedSubcategory ? { subcategory: selectedSubcategory } : {}
@@ -233,7 +233,7 @@ export default function ExploreTalent() {
                           {talent.skillSets?.map((skill) => (
                             <span
                               key={skill}
-                              className="px-3 py-1 rounded-full text-sm bg-purple-100 text-purple-600"
+                              className="px-3 py-1 rounded-full text-sm bg-purple-100 text-[#3C65F5]"
                             >
                               {skill}
                             </span>
@@ -260,7 +260,7 @@ export default function ExploreTalent() {
                           </div>
                           <Link
                             href={`/portfolio-builder/${talent.id}`}
-                            className="text-purple-600 hover:text-gray-800 text-sm font-medium"
+                            className="text-[#3C65F5] hover:text-gray-800 text-sm font-medium"
                           >
                             View
                           </Link>

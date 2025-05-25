@@ -35,7 +35,7 @@ export default function Navbar() {
               : "explore-project"
             : ""
             }`}
-          className="flex items-center text-purple-600 font-semibold"
+          className="flex items-center text-[#3C65F5] font-semibold"
         >
           <Building2 className="h-5 w-5 mr-2" />
           Build Your Portfolio
