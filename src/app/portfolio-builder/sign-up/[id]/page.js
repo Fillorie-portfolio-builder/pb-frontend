@@ -164,6 +164,16 @@ export default function PortfolioBuilderSignup() {
     return (
         <div className="min-h-screen flex items-center justify-center bg-[#FAF8FF] p-6">
             <div className="bg-white p-8 rounded-lg shadow-lg max-w-6xl w-full">
+                <div>
+                    <Button
+                        type="button"
+                        variant="outline"
+                        className="text-sm mb-6"
+                        onClick={() => router.back()}
+                    >
+                        ← Back
+                    </Button>
+                </div>
                 <h1 className="text-3xl font-bold text-purple-600 text-center mb-2">
                     Update Your Portfolio Builder Account
                 </h1>
