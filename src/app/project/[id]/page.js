@@ -23,6 +23,7 @@ export default function PortfolioPage() {
   const router = useRouter();
   const [hasMarkedInterest, setHasMarkedInterest] = useState(false);
   const [contributor, setContributor] = useState(null);
+  const [showCompletionToast, setShowCompletionToast] = useState(false);
 
   useEffect(() => {
     const projectDetails = async () => {
@@ -66,6 +67,20 @@ export default function PortfolioPage() {
 
     projectDetails();
   }, [id, user]);
+
+ useEffect(() => {
+  if (
+    user?.id === project?.builderId &&
+    project?.completionStatus === 'completed_by_builder'
+  ) {
+    setShowCompletionToast(true);
+    const timer = setTimeout(() => {
+      setShowCompletionToast(false);
+    }, 4000);
+
+    return () => clearTimeout(timer);
+  }
+}, [project?.completionStatus, user?.id, project?.builderId]);
 
   const handleInterestedClick = async () => {
     if (user?.id === project.ownerId) {
@@ -115,6 +130,10 @@ export default function PortfolioPage() {
         return;
       }
       await markProjectCompletedByBuilder(project.id, user.id);
+      setProject(prev => ({
+        ...prev,
+        completionStatus: 'completed_by_builder'
+      }));
     } catch (err) {
       console.error("Failed to mark project as completed", err);
     }
@@ -127,6 +146,10 @@ export default function PortfolioPage() {
         return;
       }
       await confirmProjectCompletionByOwner(project.id, user.id);
+      setProject(prev => ({
+        ...prev,
+        completionStatus: 'confirmed_by_owner'
+      }));
     } catch (err) {
       console.error("Failed to mark project as completed", err);
     }
@@ -135,7 +158,11 @@ export default function PortfolioPage() {
   return (
     <div className="min-h-screen bg-gradient-to-b from-purple-50 to-white px-6 py-8">
       {/* Back to Portfolio Link */}
-
+      {showCompletionToast && (
+        <div className="fixed top-4 left-1/2 transform -translate-x-1/2 bg-blue-50 text-blue-800 px-4 py-2 rounded shadow-lg z-50 transition-opacity duration-300">
+          Waiting for owner's confirmation
+        </div>
+      )}
       {/* Main Project Container */}
       <div className="bg-white shadow-md rounded-lg p-6 max-w-7xl mx-auto">
         <div className="mb-6">
@@ -178,16 +205,20 @@ export default function PortfolioPage() {
             </Button>
 
             {user?.id === project?.builderId && (
-              <Button
-                className="bg-purple-500 text-white border-purple-500 hover:bg-purple-100 hover:text-black"
-                onClick={() => {
-                  console.log(project.id, user.id);
-                  markProjectCompleted(project.id, user.id);
-                }}
-                disabled={!project || project.completionStatus === 'confirmed_by_owner'}
-              >
-                Complete
-              </Button>
+                <Button
+                  className="bg-purple-500 text-white border-purple-500 hover:bg-purple-100 hover:text-black"
+                  onClick={() => {
+                    console.log(project.id, user.id);
+                    markProjectCompleted(project.id, user.id);
+                  }}
+                  disabled={!project || project.completionStatus === 'confirmed_by_owner' || project.completionStatus === 'completed_by_builder'}
+                >
+                  {!project || project.completionStatus === 'confirmed_by_owner'
+                    ? 'Confirmed by Owner'
+                    : project.completionStatus === 'completed_by_builder'
+                      ? 'Marked as Completed'
+                      : 'Mark as Completed'}
+                </Button>
             )}
 
             {/* Edit Button (Only for owner) */}
