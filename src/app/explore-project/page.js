@@ -108,7 +108,7 @@ const ExploreProjects = () => {
                   {project?.technologies.map((tech, i) => (
                     <span
                       key={i}
-                      className="bg-purple-200 text-purple-800 text-xs px-2 py-1 rounded-full"
+                      className="bg-[rgba(60,101,245,0.1)]  text-[#3C65F5] text-xs px-2 py-1 rounded-full"
                     >
                       {tech}
                     </span>
@@ -136,7 +136,7 @@ const ExploreProjects = () => {
                 className={`px-4 py-2 rounded border ${
                   currentPage === 1
                     ? "bg-gray-200 text-gray-500 cursor-not-allowed"
-                    : "bg-white text-[#3C65F5] hover:bg-purple-50 border-purple-600"
+                    : "bg-white text-[#3C65F5] hover:bg-purple-50 border-[#3C65F5]"
                 }`}
               >
                 Previous
@@ -148,7 +148,7 @@ const ExploreProjects = () => {
                     onClick={() => paginate(number)}
                     className={`px-4 py-2 rounded border ${
                       currentPage === number
-                        ? "bg-purple-600 text-white border-purple-600"
+                        ? "bg-[#3C65F5] hover:bg-[rgba(60,101,245,0.8)] text-white border-[#3C65F5]"
                         : "bg-white text-[#3C65F5] hover:bg-purple-50 border-gray-300"
                     }`}
                   >
@@ -166,7 +166,7 @@ const ExploreProjects = () => {
                 className={`px-4 py-2 rounded border ${
                   currentPage === totalPages
                     ? "bg-gray-200 text-gray-500 cursor-not-allowed"
-                    : "bg-white text-[#3C65F5] hover:bg-purple-50 border-purple-600"
+                    : "bg-white text-[#3C65F5] hover:bg-purple-50 border-[#3C65F5]"
                 }`}
               >
                 Next

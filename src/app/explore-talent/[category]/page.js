@@ -71,7 +71,7 @@ export default function ExploreTalentbycategory() {
               key={index}
               onClick={() => setActiveSubcategory(sub)}
               className={`px-3 py-1 rounded-full text-sm border ${activeSubcategory === sub
-                ? "bg-purple-600 text-white"
+                ? "bg-[#3C65F5]  text-white"
                 : "bg-white text-[#3C65F5] border-purple-300"
                 } hover:bg-purple-100 hover:text-[#3C65F5]`}
             >
@@ -153,7 +153,7 @@ export default function ExploreTalentbycategory() {
                     disabled={currentPage === 1}
                     className={`px-4 py-2 rounded border ${currentPage === 1
                       ? "bg-gray-200 text-gray-500 cursor-not-allowed"
-                      : "bg-white text-[#3C65F5] hover:bg-purple-50 border-purple-600"
+                      : "bg-white text-[#3C65F5] hover:bg-purple-50 border-[#3C65F5]"
                       }`}
                   >
                     Previous
@@ -164,7 +164,7 @@ export default function ExploreTalentbycategory() {
                       key={number}
                       onClick={() => paginate(number)}
                       className={`px-4 py-2 rounded border ${currentPage === number
-                        ? "bg-purple-600 text-white border-purple-600"
+                        ? "bg-[#3C65F5]  text-white border-[#3C65F5]"
                         : "bg-white text-[#3C65F5] hover:bg-purple-50 border-gray-300"
                         }`}
                     >
@@ -177,7 +177,7 @@ export default function ExploreTalentbycategory() {
                     disabled={currentPage === totalPages}
                     className={`px-4 py-2 rounded border ${currentPage === totalPages
                       ? "bg-gray-200 text-gray-500 cursor-not-allowed"
-                      : "bg-white text-[#3C65F5] hover:bg-purple-50 border-purple-600"
+                      : "bg-white text-[#3C65F5] hover:bg-purple-50 border-[#3C65F5]"
                       }`}
                   >
                     Next

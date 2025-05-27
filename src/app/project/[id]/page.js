@@ -177,7 +177,7 @@ export default function PortfolioPage() {
         </div>
         {/* Project Title */}
         <div className="flex items-start justify-between mb-4">
-          <h1 className="text-2xl font-bold text-purple-700">
+          <h1 className="text-2xl font-bold text-[#3C65F5]">
             {project?.projectName}
           </h1>
 
@@ -187,16 +187,16 @@ export default function PortfolioPage() {
               onClick={handleInterestedClick}
               className={`flex items-center gap-1 px-3 py-1.5 text-sm rounded-full transition border shadow-sm
                 ${hasMarkedInterest
-                  ? "bg-purple-100 text-purple-700 border-purple-200 hover:bg-purple-100"
+                  ? "bg-[rgba(60,101,245,0.01)] hover:bg-[rgba(60,101,245,0.2)] text-[#3C65F5] border-purple-200"
                   : "bg-white text-black border-gray-300 hover:bg-white hover:text-black"
                 }`}
             >
               <Star
-                className={`h-4 w-4 mr-2 ${hasMarkedInterest ? "text-purple-700" : "text-black"
+                className={`h-4 w-4 mr-2 ${hasMarkedInterest ? "text-[#3C65F5]" : "text-black"
                   }`}
               />
               <span
-                className={`${hasMarkedInterest ? "text-purple-700" : "text-black"
+                className={`${hasMarkedInterest ? "text-[#3C65F5]" : "text-black"
                   }`}
               >
                 {" "}
@@ -206,7 +206,7 @@ export default function PortfolioPage() {
 
             {user?.id === project?.builderId && (
                 <Button
-                  className="bg-purple-500 text-white border-purple-500 hover:bg-purple-100 hover:text-black"
+                  className="bg-[#3C65F5] hover:bg-[rgba(60,101,245,0.8)] text-white border-[#3C65F5]"
                   onClick={() => {
                     console.log(project.id, user.id);
                     markProjectCompleted(project.id, user.id);
@@ -235,7 +235,7 @@ export default function PortfolioPage() {
                 </Button>
                 {project && (project.completionStatus === 'completed_by_builder' || project.completionStatus === 'confirmed_by_owner') && (
                   <Button
-                    className="bg-purple-500 text-white border-purple-500 hover:bg-purple-100 hover:text-black"
+                    className="bg-[#3C65F5] text-white border-[#3C65F5] hover:bg-purple-100 hover:text-black"
                     onClick={confirmProjectCompletion}
                     disabled={project.completionStatus === 'confirmed_by_owner'}
                   >
@@ -259,7 +259,7 @@ export default function PortfolioPage() {
             {project?.technologies?.map((tech, index) => (
               <span
                 key={index}
-                className="bg-purple-200 text-purple-800 text-xs px-3 py-1 rounded-full"
+                className="bg-[rgba(60,101,245,0.1)] text-[#3C65F5] text-xs px-3 py-1 rounded-full"
               >
                 {tech}
               </span>
@@ -301,7 +301,7 @@ export default function PortfolioPage() {
                         alt={contributor.firstName}
                       />
                     ) : (
-                      <div className="w-8 h-8 rounded-full bg-purple-100 text-purple-700 flex items-center justify-center text-sm font-semibold">
+                      <div className="w-8 h-8 rounded-full bg-purple-100 text-[#3C65F5] flex items-center justify-center text-sm font-semibold">
                         {contributor.firstName?.[0]}
                       </div>
                     )}
@@ -342,7 +342,7 @@ export default function PortfolioPage() {
                           alt={builder.firstName}
                         />
                       ) : (
-                        <div className="w-8 h-8 rounded-full bg-purple-100 text-purple-700 flex items-center justify-center text-sm font-semibold">
+                        <div className="w-8 h-8 rounded-full bg-purple-100 text-[#3C65F5] flex items-center justify-center text-sm font-semibold">
                           {builder.firstName?.[0]}
                         </div>
                       )}
@@ -361,7 +361,7 @@ export default function PortfolioPage() {
                     ) : (
                       <button
                         onClick={() => handleAddToProject(builder.id)}
-                        className="text-xs bg-purple-600 text-white px-3 py-1 rounded hover:bg-purple-700 transition"
+                        className="text-xs bg-[#3C65F5] text-white px-3 py-1 rounded hover:bg-[rgba(60,101,245,0.8)] transition"
                       >
                         Add to Project
                       </button>
