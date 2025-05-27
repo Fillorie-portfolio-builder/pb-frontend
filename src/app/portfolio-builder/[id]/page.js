@@ -178,13 +178,13 @@ export default function TalentProfile() {
               </Button>
               {user?.accountType === "builder" && (
                 <Link href={`/portfolio-builder/sign-up/${builderId}`}>
-                  <button className="bg-purple-600 text-white px-5 py-2 mb-3 rounded hover:bg-purple-700 transition w-full">
+                  <button className="bg-[#3C65F5] text-white text-sm px-5 py-2 mb-3 rounded hover:bg-[rgba(60,101,245,0.8)]  transition w-full">
                     Edit Profile
                   </button>
                 </Link>
               )}
               {user?.accountType === "owner" && (
-                <button onClick={() => setIsOpenReview(true)} className="bg-purple-600 text-white px-5 py-2 mb-3 rounded hover:bg-purple-700 transition w-full">
+                <button onClick={() => setIsOpenReview(true)} className="bg-[#3C65F5] text-white text-sm px-5 py-2 mb-3 rounded hover:bg-[rgba(60,101,245,0.8)] transition w-full">
                   Rate & Review
                 </button>
               )}
@@ -217,12 +217,12 @@ export default function TalentProfile() {
               <p className="text-gray-600">{builder.educationalBackground}</p>
             </section>
 
-            <section className="mb-8">
+            {/* <section className="mb-8">
               <h2 className="text-xl font-semibold mb-4">Preferred Job Types</h2>
               <p className="text-gray-600">
                 {builder.preferredJobTypes?.join(", ")}
               </p>
-            </section>
+            </section> */}
 
             <section className="mb-8">
               <h2 className="text-xl font-semibold mb-4">Availability</h2>
@@ -351,7 +351,7 @@ export default function TalentProfile() {
             onChange={(e) => setReviewText(e.target.value)}
           />
           <button
-            className="w-full px-5 py-3 bg-gray-500 rounded-lg text-white hover:bg-gray-700 font-semibold"
+            className="w-full px-5 py-3 rounded-lg text-white  font-semibold bg-[#3C65F5] hover:bg-[rgba(60,101,245,0.8)]"
             onClick={handleReviewSubmit}
           >
             Submit a review

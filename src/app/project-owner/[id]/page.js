@@ -67,7 +67,7 @@ export default function ProjectOwner() {
 
             <div className="bg-white p-6 rounded-lg shadow">
               <Link href="/project-owner/project">
-                <button className="bg-purple-600 text-white px-5 py-2 mb-3 rounded hover:bg-purple-700 transition w-full">
+                <button className=" text-white px-5 py-2 mb-3 rounded bg-[#3C65F5] hover:bg-[rgba(60,101,245,0.8)] transition w-full">
                   + Post a Project
                 </button>
               </Link>
