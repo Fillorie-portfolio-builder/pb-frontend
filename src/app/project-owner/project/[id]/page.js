@@ -111,7 +111,7 @@ export default function EditProject() {
           </Button>
         </div>
 
-        <h1 className="text-3xl font-bold text-purple-600 text-center mb-6">
+        <h1 className="text-3xl font-bold text-[#3C65F5] text-center mb-6">
           Edit Project
         </h1>
 

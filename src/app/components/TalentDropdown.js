@@ -46,7 +46,7 @@ export default function TalentDropdown() {
               <div key={category.title} className="space-y-4">
                 <Link
                   href={`/explore-talent/${category.slug}`}
-                  className="flex items-center text-purple-600 font-semibold hover:text-purple-700"
+                  className="flex items-center text-[#3C65F5] font-semibold hover:text-[#E1E7FE]"
                 >
                   <ChevronRight className="h-5 w-5" />
                   {category.title}

@@ -72,8 +72,8 @@ export default function ExploreTalentbycategory() {
               onClick={() => setActiveSubcategory(sub)}
               className={`px-3 py-1 rounded-full text-sm border ${activeSubcategory === sub
                 ? "bg-purple-600 text-white"
-                : "bg-white text-purple-600 border-purple-300"
-                } hover:bg-purple-100 hover:text-purple-600`}
+                : "bg-white text-[#3C65F5] border-purple-300"
+                } hover:bg-purple-100 hover:text-[#3C65F5]`}
             >
               {sub}
             </button>
@@ -119,7 +119,7 @@ export default function ExploreTalentbycategory() {
                     {talent.skillSets?.map((skill) => (
                       <span
                         key={skill}
-                        className="px-3 py-1 rounded-full text-sm bg-purple-100 text-purple-600"
+                        className="px-3 py-1 rounded-full text-sm bg-purple-100 text-[#3C65F5]"
                       >
                         {skill}
                       </span>
@@ -136,7 +136,7 @@ export default function ExploreTalentbycategory() {
                     </span>
                     <Link
                       href={`/portfolio-builder/${talent.id}`}
-                      className="text-sm text-purple-600 hover:text-gray-800 font-medium"
+                      className="text-sm text-[#3C65F5] hover:text-gray-800 font-medium"
                     >
                       View
                     </Link>
@@ -153,7 +153,7 @@ export default function ExploreTalentbycategory() {
                     disabled={currentPage === 1}
                     className={`px-4 py-2 rounded border ${currentPage === 1
                       ? "bg-gray-200 text-gray-500 cursor-not-allowed"
-                      : "bg-white text-purple-600 hover:bg-purple-50 border-purple-600"
+                      : "bg-white text-[#3C65F5] hover:bg-purple-50 border-purple-600"
                       }`}
                   >
                     Previous
@@ -165,7 +165,7 @@ export default function ExploreTalentbycategory() {
                       onClick={() => paginate(number)}
                       className={`px-4 py-2 rounded border ${currentPage === number
                         ? "bg-purple-600 text-white border-purple-600"
-                        : "bg-white text-purple-600 hover:bg-purple-50 border-gray-300"
+                        : "bg-white text-[#3C65F5] hover:bg-purple-50 border-gray-300"
                         }`}
                     >
                       {number}
@@ -177,7 +177,7 @@ export default function ExploreTalentbycategory() {
                     disabled={currentPage === totalPages}
                     className={`px-4 py-2 rounded border ${currentPage === totalPages
                       ? "bg-gray-200 text-gray-500 cursor-not-allowed"
-                      : "bg-white text-purple-600 hover:bg-purple-50 border-purple-600"
+                      : "bg-white text-[#3C65F5] hover:bg-purple-50 border-purple-600"
                       }`}
                   >
                     Next

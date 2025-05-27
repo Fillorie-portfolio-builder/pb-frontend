@@ -77,6 +77,20 @@ export default function PortfolioPage() {
         // 🔁 Toggle logic (replace with actual API)
         const newInterest = !hasMarkedInterest;
         setHasMarkedInterest(newInterest);
+        setProject((prev) => {
+          const updated = { ...prev };
+          if (newInterest) {
+            updated.interestedBuilders = [
+              ...(prev.interestedBuilders || []),
+              user.id,
+            ];
+          } else {
+            updated.interestedBuilders = (prev.interestedBuilders || []).filter(
+              (id) => id !== user.id
+            );
+          }
+          return updated;
+        });
 
         await markAsInterested(project.id, user.id, newInterest);
       } catch (err) {
@@ -226,7 +240,7 @@ export default function PortfolioPage() {
                 <>
                   <Link
                     href={url}
-                    className="text-purple-600 underline mt-1 block"
+                    className="text-[#3C65F5] underline mt-1 block"
                   >
                     {url}
                   </Link>
@@ -332,7 +346,7 @@ export default function PortfolioPage() {
 
             <button
               onClick={() => setShowInterestedDialog(false)}
-              className="mt-6 text-purple-600 hover:underline text-sm"
+              className="mt-6 text-[#3C65F5] hover:underline text-sm"
             >
               Close
             </button>

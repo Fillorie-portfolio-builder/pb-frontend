@@ -8,9 +8,9 @@ export default function Home() {
     <div className="min-h-screen bg-[#FAF8FF]">
       <section className="py-20 px-4 text-center">
         <h1 className="text-4xl md:text-6xl font-bold mb-6">
-          <span className="text-purple-600">Match Skills to Needs,</span>
+          <span className="font-jakarta text-[#3C65F5]">Match Skills to Needs,</span>
           <br />
-          <span className="text-purple-600">Build Portfolios</span>
+          <span className="font-jakarta text-[#3C65F5]">Build Portfolios</span>
           <br />
           Thrive Together
         </h1>
@@ -38,7 +38,7 @@ export default function Home() {
         </div>
       </section>
       <section className="py-20 px-4">
-        <h2 className="text-3xl md:text-4xl font-bold text-center mb-16">
+        <h2 className="font-jakarta text-3xl md:text-4xl font-bold text-center mb-16">
           How It Works
         </h2>
         <div className="max-w-6xl mx-auto grid md:grid-cols-3 gap-12">
@@ -63,7 +63,7 @@ export default function Home() {
             },
           ].map((step) => (
             <div key={step.number} className="text-center">
-              <div className="w-12 h-12 bg-purple-100 rounded-full flex items-center justify-center text-purple-600 text-xl font-semibold mx-auto mb-6">
+              <div className="w-12 h-12 bg-[#E1E7FE] rounded-full flex items-center justify-center text-[#3C65F5] text-xl font-semibold mx-auto mb-6">
                 {step.number}
               </div>
               <h3 className="text-xl font-semibold mb-4">{step.title}</h3>

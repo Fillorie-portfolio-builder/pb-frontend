@@ -10,7 +10,7 @@ export default function Footer(){
             <div className="col-span-2 md:col-span-1">
               <Link
                 href="/"
-                className="flex items-center text-purple-600 font-semibold mb-4"
+                className="flex items-center text-[#3C65F5] font-semibold mb-4"
               >
                 <Building2 className="h-5 w-5 mr-2" />
                 Build Your Portfolio

@@ -30,7 +30,7 @@ export default function PortfolioBuilderSignup() {
   const [selectedSubcategories, setSelectedSubcategories] = useState([]);
   const [skillInput, setSkillInput] = useState("");
 
-  const jobTypesOptions = ["Full-time", "Part-time", "Contract", "Freelance"];
+  const jobTypesOptions = ["Full-time", "Part-time", "Contract"];
 
   // Handle text input changes
   const handleChange = (e) => {
@@ -96,7 +96,7 @@ export default function PortfolioBuilderSignup() {
   return (
     <div className="min-h-screen flex items-center justify-center bg-[#FAF8FF] p-6">
       <div className="bg-white p-8 rounded-lg shadow-lg max-w-6xl w-full">
-        <h1 className="text-3xl font-bold text-purple-600 text-center mb-2">
+        <h1 className="text-3xl font-bold text-[#3C65F5] text-center mb-2">
           Create Your Portfolio Builder Account
         </h1>
         <p className="text-gray-600 text-center mb-6">

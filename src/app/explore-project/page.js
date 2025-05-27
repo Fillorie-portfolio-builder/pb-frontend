@@ -46,28 +46,45 @@ const ExploreProjects = () => {
     <div className="min-h-screen bg-gray-100 p-6">
       <div className="max-w-7xl mx-auto">
         <div className="flex items-center justify-between mb-8">
-          <div >
+          <div>
             <h1 className="text-3xl font-bold">Explore Projects</h1>
           </div>
-          <div className="relative">
+
+          <div className="relative inline-block">
             <select
               id="categories"
               name="categories"
-              className="appearance-none p-3  border border-gray-300 rounded"
+              className="appearance-none w-full p-2 pr-8 border border-gray-300 rounded text-sm focus:outline-none focus:ring-2 focus:ring-purple-500"
+
               value={selectedCategory}
               onChange={(e) => setSelectedCategory(e.target.value)}
             >
               <option value="">All Categories</option>
               <option value="creative-design">Creative & Design</option>
-              <option value="engineering-technical">Engineering & Technical</option>
+              <option value="engineering-technical">
+                Engineering & Technical
+              </option>
               <option value="it-software">IT & Software Development</option>
               <option value="writing-content">Writing & Content</option>
               <option value="marketing-sales">Marketing & Sales</option>
               <option value="data-analytics">Data & Analytics</option>
             </select>
-            <div className="pointer-events-none absolute inset-y-0 right-3 flex items-center">
-              <svg className="w-4 h-4 text-gray-600" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" d="M19 9l-7 7-7-7" />
+
+
+            {/* Custom dropdown arrow */}
+            <div className="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-700">
+              <svg
+                className="w-4 h-4"
+                fill="none"
+                stroke="currentColor"
+                viewBox="0 0 24 24"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth={2}
+                  d="M19 9l-7 7-7-7"
+                />
               </svg>
             </div>
           </div>
@@ -83,7 +100,9 @@ const ExploreProjects = () => {
                 {/* <div className="w-full h-36 bg-gray-200 rounded mb-4 flex items-center justify-center">
                 <span className="text-gray-400">[ Image Placeholder ]</span>
               </div> */}
-                <h3 className="text-lg font-semibold">{project?.projectName}</h3>
+                <h3 className="text-lg font-semibold">
+                  {project?.projectName}
+                </h3>
                 {/* <p className="text-gray-500 text-sm">📍 {project?.location}</p> */}
                 <div className="flex flex-wrap gap-2 mt-2">
                   {project?.technologies.map((tech, i) => (
@@ -98,7 +117,7 @@ const ExploreProjects = () => {
                 <p className="text-gray-600 mt-2 text-sm">
                   {project?.description}
                 </p>
-                <a href="#" className="text-purple-600 font-medium mt-2 block">
+                <a href="#" className="text-[#3C65F5] font-medium mt-2 block">
                   {project?.subcategory}
                 </a>
                 <Link href={`/project/${project.id}`}>
@@ -114,23 +133,41 @@ const ExploreProjects = () => {
               <button
                 onClick={() => paginate(currentPage > 1 ? currentPage - 1 : 1)}
                 disabled={currentPage === 1}
-                className={`px-4 py-2 rounded border ${currentPage === 1 ? "bg-gray-200 text-gray-500 cursor-not-allowed" : "bg-white text-purple-600 hover:bg-purple-50 border-purple-600"}`}
+                className={`px-4 py-2 rounded border ${
+                  currentPage === 1
+                    ? "bg-gray-200 text-gray-500 cursor-not-allowed"
+                    : "bg-white text-[#3C65F5] hover:bg-purple-50 border-purple-600"
+                }`}
               >
                 Previous
               </button>
-              {Array.from({ length: totalPages }, (_, i) => i + 1).map((number) => (
-                <button
-                  key={number}
-                  onClick={() => paginate(number)}
-                  className={`px-4 py-2 rounded border ${currentPage === number ? "bg-purple-600 text-white border-purple-600" : "bg-white text-purple-600 hover:bg-purple-50 border-gray-300"}`}
-                >
-                  {number}
-                </button>
-              ))}
+              {Array.from({ length: totalPages }, (_, i) => i + 1).map(
+                (number) => (
+                  <button
+                    key={number}
+                    onClick={() => paginate(number)}
+                    className={`px-4 py-2 rounded border ${
+                      currentPage === number
+                        ? "bg-purple-600 text-white border-purple-600"
+                        : "bg-white text-[#3C65F5] hover:bg-purple-50 border-gray-300"
+                    }`}
+                  >
+                    {number}
+                  </button>
+                )
+              )}
               <button
-                onClick={() => paginate(currentPage < totalPages ? currentPage + 1 : totalPages)}
+                onClick={() =>
+                  paginate(
+                    currentPage < totalPages ? currentPage + 1 : totalPages
+                  )
+                }
                 disabled={currentPage === totalPages}
-                className={`px-4 py-2 rounded border ${currentPage === totalPages ? "bg-gray-200 text-gray-500 cursor-not-allowed" : "bg-white text-purple-600 hover:bg-purple-50 border-purple-600"}`}
+                className={`px-4 py-2 rounded border ${
+                  currentPage === totalPages
+                    ? "bg-gray-200 text-gray-500 cursor-not-allowed"
+                    : "bg-white text-[#3C65F5] hover:bg-purple-50 border-purple-600"
+                }`}
               >
                 Next
               </button>

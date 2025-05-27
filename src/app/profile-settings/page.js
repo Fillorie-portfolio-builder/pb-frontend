@@ -215,7 +215,7 @@ export default function ProfileSetting() {
             <div className="flex flex-col md:flex-row bg-white md:p-8 rounded-lg shadow-xl max-w-6xl w-full m-10">
                 {/* Left sidebar */}
                 <div className="md:w-48 p-4 border-b md:border-b-0 md:border-r border-gray-300">
-                    <h1 className="text-xl font-bold text-purple-500 mb-2">Profile Settings</h1>
+                    <h1 className="text-xl font-bold text-[#3C65F5] mb-2">Profile Settings</h1>
                     <nav className="space-y-1 md:pr-8 mt-5">
                         <button
                             onClick={() => handleTabChange("account")}
@@ -256,7 +256,7 @@ export default function ProfileSetting() {
                         {activeTab === "account" && (
                             <div className="space-y-6">
                                 <div className="p-6">
-                                    <h2 className="text-lg font-bold text-purple-600 -mt-8">Profile</h2>
+                                    <h2 className="text-lg font-bold text-[#3C65F5] -mt-8">Profile</h2>
                                     <div className="flex items-center mb-6 justify-center mt-4">
                                         <div className="flex-col">
                                             <div>
@@ -327,7 +327,7 @@ export default function ProfileSetting() {
 
                         {activeTab === "Email" && (
                             <div className="p-6">
-                                <h2 className="text-lg font-bold text-purple-600 -mt-8">Email Settings</h2>
+                                <h2 className="text-lg font-bold text-[#3C65F5] -mt-8">Email Settings</h2>
                                 <div className="mt-4">
                                     <div className="mb-4">
                                         <label htmlFor="email" className="block text-gray-500 mb-1 font-semibold">Email Address</label>
@@ -351,7 +351,7 @@ export default function ProfileSetting() {
 
                         {activeTab === "Password" && (
                             <div className="p-6">
-                                <h2 className="text-lg font-bold text-purple-600 -mt-8">Password</h2>
+                                <h2 className="text-lg font-bold text-[#3C65F5] -mt-8">Password</h2>
                                 <div className="mt-4">
                                     <div className="mb-4">
                                         <label htmlFor="currentPassword" className="block text-gray-500 mb-1 font-semibold">Current Password</label>
