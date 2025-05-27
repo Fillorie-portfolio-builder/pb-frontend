@@ -49,11 +49,13 @@ const ExploreProjects = () => {
           <div>
             <h1 className="text-3xl font-bold">Explore Projects</h1>
           </div>
+
           <div className="relative inline-block">
             <select
               id="categories"
               name="categories"
               className="appearance-none w-full p-2 pr-8 border border-gray-300 rounded text-sm focus:outline-none focus:ring-2 focus:ring-purple-500"
+
               value={selectedCategory}
               onChange={(e) => setSelectedCategory(e.target.value)}
             >
@@ -67,6 +69,7 @@ const ExploreProjects = () => {
               <option value="marketing-sales">Marketing & Sales</option>
               <option value="data-analytics">Data & Analytics</option>
             </select>
+
 
             {/* Custom dropdown arrow */}
             <div className="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-700">

@@ -264,7 +264,9 @@ export default function TalentProfile() {
                       <p className="text-gray-600 mt-2 text-sm line-clamp-3">
                         {project.description}
                       </p>
+
                       <p className="text-[#3C65F5] font-medium mt-2 text-sm">
+
                         {project.subcategory}
                       </p>
                       <Link href={`/project/${project.id}`} passHref>
