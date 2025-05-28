@@ -188,16 +188,16 @@ export default function PortfolioPage() {
                 onClick={handleInterestedClick}
                 className={`flex items-center gap-1 px-3 py-1.5 text-sm rounded-full transition border shadow-sm
                   ${hasMarkedInterest
-                    ? "bg-[rgba(60,101,245,0.01)] hover:bg-[rgba(60,101,245,0.2)] text-[#3C65F5] border-purple-200"
+                    ? "bg-[rgba(60,101,245,0.6)]   border-purple-200"
                     : "bg-white text-black border-gray-300 hover:bg-white hover:text-black"
                   }`}
               >
                 <Star
-                  className={`h-4 w-4 mr-2 ${hasMarkedInterest ? "text-[#3C65F5]" : "text-black"
+                  className={`h-4 w-4 mr-2 ${hasMarkedInterest ? "text-white" : "text-black"
                     }`}
                 />
                 <span
-                  className={`${hasMarkedInterest ? "text-[#3C65F5]" : "text-black"
+                  className={`${hasMarkedInterest ? "text-white" : "text-black"
                     }`}
                 >
                   {" "}

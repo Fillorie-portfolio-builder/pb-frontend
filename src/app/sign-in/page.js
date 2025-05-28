@@ -58,8 +58,8 @@ export default function SignIn() {
     return (
       <div className="min-h-screen flex items-center justify-center bg-[#FAF8FF]">
         <div className="bg-white p-8 rounded-xl shadow-md w-full max-w-lg ">
-          <h2 className="text-2xl font-bold text-center text-purple-600 ">Reset Password</h2>
-          <p className="text-gray-600 text-center mb-6 my-5">Enter your email to reset your password.</p>
+          <h2 className="text-2xl font-bold text-center text-[#3C65F5] ">Reset Password</h2>
+          <p className="text-gray-600 text-center  my-5">Enter your email to reset your password.</p>
           <form className="space-y-5" onSubmit={handleForgotPassword}>
             <div className="relative">
               <Mail className="absolute left-3 top-3 h-5 w-5 text-gray-400" />
@@ -73,7 +73,7 @@ export default function SignIn() {
             </div>
             <button
               type="submit"
-              className="w-full bg-purple-600 text-white py-2 rounded-lg hover:bg-purple-700 transition-colors">
+              className="w-full bg-[#3C65F5] hover:bg-[rgba(60,101,245,0.8)] text-white py-2 rounded-lg transition-colors">
               Send Reset Link
             </button>
           </form>
@@ -126,7 +126,15 @@ export default function SignIn() {
           </div>
 
           {/* Sign In Button */}
-          <Button type="submit" className="w-full bg-purple-600 hover:bg-purple-700">
+          <p className=" text-left">
+            <button
+              onClick={() => setShowResetPassword(true)}
+              className="text-[#3C65F5] hover:text-[#3c64f5c5] text-sm"
+            >
+              Forgot password?
+            </button>
+          </p>
+          <Button type="submit" className="w-full bg-[#3C65F5] hover:bg-[rgba(60,101,245,0.8)]">
             Sign In
           </Button>
         </form>
@@ -137,14 +145,6 @@ export default function SignIn() {
 
             Sign Up
           </Link>
-        </p>
-        <p className="text-gray-600 text-center">
-          <button
-            onClick={() => setShowResetPassword(true)}
-            className="text-purple-600 hover:text-purple-700"
-          >
-            Forgotten password?
-          </button>
         </p>
       </div>
     </div>
