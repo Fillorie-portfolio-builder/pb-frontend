@@ -20,7 +20,7 @@ export default function Footer(){
                 impressive portfolio.
               </p>
             </div>
-            <div>
+            {/* <div>
               <h3 className="font-semibold mb-4">Platform</h3>
               <ul className="space-y-3">
                 <li>
@@ -56,7 +56,7 @@ export default function Footer(){
                   </Link>
                 </li>
               </ul>
-            </div>
+            </div> */}
             <div>
               <h3 className="font-semibold mb-4">Company</h3>
               <ul className="space-y-3">
@@ -68,7 +68,7 @@ export default function Footer(){
                     About Us
                   </Link>
                 </li>
-                <li>
+                {/* <li>
                   <Link
                     href="/careers"
                     className="text-sm text-gray-600 hover:text-gray-900"
@@ -83,7 +83,7 @@ export default function Footer(){
                   >
                     Blog
                   </Link>
-                </li>
+                </li> */}
                 <li>
                   <Link
                     href="/contact"
@@ -113,14 +113,14 @@ export default function Footer(){
                     Terms of Service
                   </Link>
                 </li>
-                <li>
+                {/* <li>
                   <Link
                     href="/cookies"
                     className="text-sm text-gray-600 hover:text-gray-900"
                   >
                     Cookie Policy
                   </Link>
-                </li>
+                </li> */}
               </ul>
             </div>
           </div>
