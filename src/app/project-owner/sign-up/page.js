@@ -183,6 +183,7 @@ export default function ProjectOwnerSignup() {
                 value={formData.linkedin}
                 className="border p-3 rounded-md w-full"
                 onChange={handleChange}
+                required
               />
             </div>
             <div>
