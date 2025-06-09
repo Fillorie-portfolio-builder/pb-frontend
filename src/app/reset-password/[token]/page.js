@@ -45,7 +45,7 @@ const ConfirmPassword = () => {
     return (
         <div className="min-h-screen flex items-center justify-center bg-[#FAF8FF]">
             <div className="bg-white p-8 rounded-xl shadow-md w-full max-w-lg">
-                <h2 className="text-2xl font-bold text-center text-purple-600">Confirm Password</h2>
+                <h2 className="text-2xl font-bold text-center text-[#3C65F5]">Confirm Password</h2>
                 <p className="text-gray-600 text-center mb-6 my-5">Please enter your new password.</p>
                 <form className="space-y-5" onSubmit={handleConfirmPassword}>
                     {error && <p className="text-red-500">{error}</p>}
@@ -72,7 +72,7 @@ const ConfirmPassword = () => {
                     </div>
                     <button
                         type="submit"
-                        className="w-full bg-purple-600 text-white py-2 rounded-lg hover:bg-purple-700 transition-colors"
+                        className="w-full bg-[#3C65F5] hover:bg-[rgba(60,101,245,0.8)] text-white py-2 rounded-lg transition-colors"
                     >
                         Confirm Password
                     </button>
