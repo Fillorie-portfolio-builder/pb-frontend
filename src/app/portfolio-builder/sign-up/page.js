@@ -188,6 +188,7 @@ export default function PortfolioBuilderSignup() {
               <select
                 value={category}
                 className="border p-3 rounded-md w-full"
+                required
                 onChange={(e) => {
                   const selected = e.target.value;
                   setCategory(selected);
@@ -295,6 +296,7 @@ export default function PortfolioBuilderSignup() {
                 name="availability"
                 value={formData.availability}
                 className="border p-3 rounded-md w-full"
+                required
                 onChange={(e) =>
                   setFormData({
                     ...formData,
@@ -316,6 +318,7 @@ export default function PortfolioBuilderSignup() {
                 value={formData.educationalBackground}
                 className="border p-3 rounded-md w-full"
                 onChange={handleChange}
+                required
               ></textarea>
             </div>
 
