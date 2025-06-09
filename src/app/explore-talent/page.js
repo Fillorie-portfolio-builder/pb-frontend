@@ -163,16 +163,16 @@ export default function ExploreTalent() {
                           handleSubcategorySelect(category.slug, sub)
                         }
                         className={`px-3 py-1 rounded-full text-sm border ${selectedSubcategory === sub
-                          ? "bg-purple-600 text-white"
+                          ? "bg-[#3C65F5] text-white"
                           : "bg-white text-[#3C65F5] border-purple-300"
-                          } hover:bg-purple-100 hover:text-[#3C65F5]`}
+                          } hover:bg-[rgba(60,101,245,0.1)] hover:text-[#3C65F5]`}
                       >
                         {sub}
                       </button>
                     ))}
                     {selectedSubcategory && (
                       <button
-                        className="text-xs ml-2 text-red-500 underline"
+                        className="text-xs ml-2 text-[#3C65F5] underline"
                         onClick={() =>
                           handleSubcategorySelect(category.slug, null)
                         }
@@ -271,7 +271,7 @@ export default function ExploreTalent() {
                 </>
               ) : (
                 <p className="text-gray-500 text-sm mt-4">
-                  No builders found for this category.
+                  This category doesn’t have any profiles yet. New talent is added often, so check back soon!
                 </p>
               )}
             </div>

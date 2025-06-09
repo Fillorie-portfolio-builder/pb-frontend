@@ -80,7 +80,7 @@ export default function ExploreTalentbycategory() {
           ))}
           {activeSubcategory && (
             <button
-              className="text-xs ml-2 text-red-500 underline"
+              className="text-xs ml-2 text-[#3C65F5] underline"
               onClick={() => setActiveSubcategory(null)}
             >
               Clear Filter
@@ -188,7 +188,8 @@ export default function ExploreTalentbycategory() {
           </>
         ) : (
           <p className="text-gray-500 text-sm mt-4">
-            No builders found {activeSubcategory ? `for ${activeSubcategory}` : "in this category"}.
+            {/* No builders found {activeSubcategory ? `for ${activeSubcategory}` : "in this category"}. */}
+            This category doesn’t have any profiles yet. New talent is added often, so check back soon!
           </p>
         )}
       </div>
