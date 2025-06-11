@@ -176,7 +176,7 @@ export default function TalentProfile() {
               <Button onClick={() => setIsOpen(true)}>
                 Contact
               </Button>
-              {user?.accountType === "builder" && (
+              {user?.accountType === "builder" && user?.id === builderId && (
                 <Link href={`/portfolio-builder/sign-up/${builderId}`}>
                   <button className="bg-[#3C65F5] text-white text-sm px-5 py-2 mb-3 rounded hover:bg-[rgba(60,101,245,0.8)]  transition w-full">
                     Edit Profile
