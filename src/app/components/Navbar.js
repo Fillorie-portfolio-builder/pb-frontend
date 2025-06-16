@@ -60,7 +60,7 @@ export default function Navbar() {
             <DropdownMenuTrigger asChild>
               <button className="flex items-center bg-gray-100 px-4 py-2 rounded-md hover:bg-gray-200 focus:outline-none">
                 <User className="h-5 w-5 mr-2" />
-                {user?.email?.split("@")[0] || "Account"}
+                {user?.firstName?.split("@")[0] || "Account"}
               </button>
             </DropdownMenuTrigger>
             <DropdownMenuContent className="w-48">
