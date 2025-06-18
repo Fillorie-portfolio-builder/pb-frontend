@@ -41,7 +41,11 @@ export default function ProjectOwner() {
           <div className="max-w-7xl mx-auto mt-6 grid grid-cols-3 gap-6">
             <div className="col-span-2 bg-white p-6 rounded-lg shadow">
               <div className="flex items-center space-x-4">
-                <div className="w-16 h-16 bg-gray-300 rounded-full"></div>
+                <div className="w-16 h-16 bg-gray-300 rounded-full">
+                  <span className="text-3xl text-[#3C65F5] flex items-center justify-center h-full">
+                        {owner?.firstName.charAt(0)}
+                  </span>
+                </div>
                 <div>
                   <h2 className="text-2xl font-bold">
                     {owner?.firstName} {owner?.lastName}

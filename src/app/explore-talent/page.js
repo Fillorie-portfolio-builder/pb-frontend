@@ -205,11 +205,14 @@ export default function ExploreTalent() {
                       >
                         <div className="flex items-start gap-4 mb-4">
                           <div className="w-12 h-12 rounded-full bg-gray-200 overflow-hidden">
-                            <img
+                            {/* <img
                               src={talent.avatar || "/placeholder.svg"}
                               alt={talent.name}
                               className="w-full h-full object-cover"
-                            />
+                            /> */}
+                            <span className="text-3xl text-[#3C65F5] flex items-center justify-center h-full">
+                              {talent.firstName?.charAt(0)}
+                            </span>
                           </div>
                           <div>
                             <h3 className="font-semibold">
