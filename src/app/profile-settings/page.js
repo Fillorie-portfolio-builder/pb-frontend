@@ -260,15 +260,20 @@ export default function ProfileSetting() {
                                     <div className="flex items-center mb-6 justify-center mt-4">
                                         <div className="flex-col">
                                             <div>
-                                                <img
+                                                {/* <img
                                                     src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTX-3fHwHfTzFBOnb3uEH3Tj4klzmxgvLvahGGUts7R-dRPVI68TVElWbCWGmAuZe_ummY&usqp=CAU"
                                                     alt="Profile"
                                                     className="w-24 h-24 rounded-full border border-purple-600"
-                                                />
+                                                /> */}
+                                                <div className="w-16 h-16 bg-gray-300 rounded-full">
+                                                    <span className="text-3xl text-[#3C65F5] flex items-center justify-center h-full">
+                                                        {profileData.firstname.charAt(0)}
+                                                    </span>
+                                                </div>
                                             </div>
-                                            <div className="mb-1 text-center">
+                                            {/* <div className="mb-1 text-center">
                                                 <button type="button" className="text-blue-600 text-sm">Change</button>
-                                            </div>
+                                            </div> */}
                                         </div>
                                     </div>
                                     <div className="grid md:grid-cols-2 grid-cols-1 gap-6">

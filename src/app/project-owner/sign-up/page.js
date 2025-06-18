@@ -84,7 +84,7 @@ export default function ProjectOwnerSignup() {
         {error && <p className="text-red-500 text-center mb-4">{error}</p>}
 
         {/* Profile Picture Upload & Preview */}
-        <div className="flex justify-center mb-6">
+        {/* <div className="flex justify-center mb-6">
           <label htmlFor="profilePic" className="relative cursor-pointer">
             {previewImage ? (
               <img
@@ -105,7 +105,7 @@ export default function ProjectOwnerSignup() {
             onChange={handleFileChange}
             accept="image/*"
           />
-        </div>
+        </div> */}
 
         <form onSubmit={handleSubmit}>
           <div className="grid grid-cols-2 gap-6">
