@@ -6,6 +6,7 @@ import { Button } from "../components/ui/Button"; // Ensure you have this button
 import { categories } from "../utils/categories";
 import { useEffect, useState } from "react";
 import { getAllBuilders } from "../api/builder"
+import { MapPinCheckInside ,CircleCheckBig } from "lucide-react"; 
 
 export default function ExploreTalent() {
   const [activeFilters, setActiveFilters] = useState({});
@@ -225,11 +226,11 @@ export default function ExploreTalent() {
                         </div>
 
                         <div className="flex items-center gap-2 text-sm text-gray-600 mb-3">
-                          📍 {talent.location}
+                        <MapPinCheckInside size={20} color="#3c65f5" />{talent.location}
                         </div>
 
                         <div className="flex items-center gap-2 text-sm text-gray-600 mb-4">
-                          ✅ {talent.projectsCompleted} completed projects
+                         <CircleCheckBig size={18} color="#36fa00" />{talent.projectsCompleted} completed projects
                         </div>
 
                         <div className="flex flex-wrap gap-2 mb-4">
