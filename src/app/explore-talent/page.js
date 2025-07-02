@@ -211,8 +211,11 @@ export default function ExploreTalent() {
                               alt={talent.name}
                               className="w-full h-full object-cover"
                             /> */}
-                            <span className="text-3xl text-[#3C65F5] flex items-center justify-center h-full">
-                              {talent.firstName?.charAt(0)}
+
+                            <span className="text-2xl text-[#3C65F5] flex items-center justify-center h-full">
+                              {talent.firstName?.charAt(0)}                        
+                              {talent.lastName?.charAt(0)}
+
                             </span>
                           </div>
                           <div>

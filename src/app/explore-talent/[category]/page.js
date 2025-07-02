@@ -7,6 +7,7 @@ import { categories } from "../../utils/categories";
 import Link from "next/link";
 import { Button } from "../../components/ui/Button";
 import { useRouter } from "next/navigation";
+import { MapPinCheckInside, CircleCheckBig } from "lucide-react";
 
 export default function ExploreTalentbycategory() {
   const { category } = useParams();
@@ -98,11 +99,15 @@ export default function ExploreTalentbycategory() {
                 >
                   <div className="flex items-start gap-4 mb-4">
                     <div className="w-12 h-12 rounded-full bg-gray-200 overflow-hidden">
-                      <img
+                      {/* <img
                         src={talent.avatar || "/placeholder.svg"}
                         alt={`${talent.firstName} ${talent.lastName}`}
                         className="w-full h-full object-cover"
-                      />
+                      /> */}
+                      <span className="text-2xl text-[#3C65F5] flex items-center justify-center h-full">
+                        {talent.firstName?.charAt(0)}
+                        {talent.lastName?.charAt(0)}
+                      </span>
                     </div>
                     <div>
                       <h3 className="font-semibold">
@@ -111,9 +116,12 @@ export default function ExploreTalentbycategory() {
                       <p className="text-gray-600 text-sm">{talent.profession}</p>
                     </div>
                   </div>
-                  <div className="text-sm text-gray-600 mb-2">📍 {talent.location}</div>
-                  <div className="text-sm text-gray-600 mb-2">
-                    ✅ {talent.projectsCompleted} completed projects
+                  <div className="flex items-center gap-2 text-sm text-gray-600 mb-3">
+                    <MapPinCheckInside size={20} color="#3c65f5" />{talent.location}
+                  </div>
+
+                  <div className="flex items-center gap-2 text-sm text-gray-600 mb-4">
+                    <CircleCheckBig size={18} color="#36fa00" />{talent.projectsCompleted} completed projects
                   </div>
                   <div className="flex flex-wrap gap-2 mb-3">
                     {talent.skillSets?.map((skill) => (
