@@ -38,7 +38,7 @@ export default function TalentProfile() {
   const [rating, setRating] = useState(0);
   const [reviewText, setReviewText] = useState("");
   const [reviews, setReviews] = useState([]);
-  const [ownername, setOwnername] = useState("")
+  const [ownername, setOwnername] = useState("");
 
   useEffect(() => {
     const fetchBuilder = async () => {
@@ -183,8 +183,11 @@ export default function TalentProfile() {
                   </button>
                 </Link>
               )}
-              {user?.accountType === "owner" && (
-                <button onClick={() => setIsOpenReview(true)} className="bg-[#3C65F5] text-white text-sm px-5 py-2 mb-3 rounded hover:bg-[rgba(60,101,245,0.8)] transition w-full">
+              {user?.accountType === "owner" && builder.projects.some(project => project.ownerId === owner.id && project.completionStatus === "confirmed_by_owner") && (
+                <button
+                  onClick={() => setIsOpenReview(true)}
+                  className="bg-[#3C65F5] text-white text-sm px-5 py-2 mb-3 rounded hover:bg-[rgba(60,101,245,0.8)] transition w-full"
+                >
                   Rate & Review
                 </button>
               )}
@@ -281,42 +284,41 @@ export default function TalentProfile() {
             )}
           </div>
         </div>
-      </div>
+        <div className="flex justify-center mt-4 ">
+          <div className="max-w-4xl w-full bg-white p-6 rounded-lg mb-6 shadow">
+            {reviews.length > 0 ? (
+              <div>
+                <h2 className="text-xl font-semibold mb-4 text-center">Reviews And Ratings</h2>
+                <ul className="space-y-4">
+                  {reviews.map((review, index) => (
+                    <li key={index} className="bg-gray-50 p-4 rounded-lg shadow-sm">
+                      <div className="mb-1 font-medium ">
+                        {review.ownername || "Unknown"}
+                      </div>
 
-      <div className="flex justify-center mt-4 mx-6">
-        <div className="max-w-4xl w-full bg-white p-6 rounded-lg mb-6 shadow">
-          {reviews.length > 0 ? (
-            <div>
-              <h2 className="text-xl font-semibold mb-4 text-center">Reviews And Ratings</h2>
-              <ul className="space-y-4">
-                {reviews.map((review, index) => (
-                  <li key={index} className="bg-gray-50 p-4 rounded-lg shadow-sm">
-                    <div className="mb-1 font-medium ">
-                      {review.ownername || "Unknown"}
-                    </div>
-
-                    <div className="flex items-center gap-1 mb-2">
-                      {[1, 2, 3, 4, 5].map((star) => (
-                        <Star
-                          key={star}
-                          className={`h-4 w-4 ${review.reviewStars >= star
-                            ? "fill-yellow-400 text-yellow-400"
-                            : "text-gray-300"
-                            }`}
-                        />
-                      ))}
-                    </div>
-                    <p className="text-gray-700 text-sm">{review.reviewText}</p>
-                  </li>
-                ))}
-              </ul>
-            </div>
-          ) : (
-            <div className="text-center text-gray-500">No Reviews and Ratings</div>
-          )}
+                      <div className="flex items-center gap-1 mb-2">
+                        {[1, 2, 3, 4, 5].map((star) => (
+                          <Star
+                            key={star}
+                            className={`h-4 w-4 ${review.reviewStars >= star
+                              ? "fill-yellow-400 text-yellow-400"
+                              : "text-gray-300"
+                              }`}
+                          />
+                        ))}
+                      </div>
+                      <p className="text-gray-700 text-sm">{review.reviewText}</p>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            ) : (
+              <div className="text-center text-gray-500">No Reviews and Ratings</div>
+            )}
+          </div>
         </div>
       </div>
-
+      
       {/* Modal for Contact Info */}
       <Modal isOpen={isOpen} onClose={() => setIsOpen(false)}>
         <h2 className="text-xl font-semibold mb-4">Contact Information</h2>
