@@ -27,6 +27,7 @@ export default function Footer() {
                 height={40}
                 className="h-7 w-auto"
               />
+
             </Link>
             <p className="text-sm text-gray-600">
               Level up your career with real-world projects and build an
