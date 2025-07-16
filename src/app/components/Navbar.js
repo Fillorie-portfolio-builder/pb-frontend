@@ -6,6 +6,7 @@ import { Building2, User, LogOut } from "lucide-react";
 import { Button } from "./ui/Button";
 import TalentDropdown from "./TalentDropdown";
 import { AuthContext } from "../context/AuthContext"; // ✅ Import AuthContext
+import Image from "next/image";
 import {
   DropdownMenu,
   DropdownMenuTrigger,
@@ -37,9 +38,21 @@ export default function Navbar() {
             }`}
           className="flex items-center text-[#3C65F5] font-semibold"
         >
-          <Building2 className="h-5 w-5 mr-2" />
-          Build Your Portfolio
-        </Link>
+         <Image
+            src="/logo.png"
+            alt="Logo"
+            width={100}
+            height={40}
+            className="h-10 w-auto"
+          /> 
+          <Image
+            src="/name.png"
+            alt="Logo"
+            width={100}
+            height={40}
+            className="h-7 w-auto"
+          />        
+          </Link>
         <div className="hidden md:flex space-x-6">
           <TalentDropdown />
           <Link
