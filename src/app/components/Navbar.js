@@ -1,11 +1,11 @@
 "use client";
-import React, { useContext } from "react";
+import React, { useContext, useState } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import { Building2, User, LogOut } from "lucide-react";
+import { Building2, User, LogOut, Menu, X } from "lucide-react";
 import { Button } from "./ui/Button";
 import TalentDropdown from "./TalentDropdown";
-import { AuthContext } from "../context/AuthContext"; // ✅ Import AuthContext
+import { AuthContext } from "../context/AuthContext";
 import Image from "next/image";
 import {
   DropdownMenu,
@@ -13,20 +13,25 @@ import {
   DropdownMenuContent,
   DropdownMenuItem,
   DropdownMenuSeparator,
-} from "./ui/Dropdown"; // ✅ Import dropdown menu components
-
+} from "./ui/Dropdown";
 
 export default function Navbar() {
-  const { user, logout } = useContext(AuthContext); // ✅ Use AuthContext
+  const { user, logout } = useContext(AuthContext);
   const router = useRouter();
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
   const handleLogout = () => {
-    logout(); // Call the logout function from context
-    router.push("/"); // Redirect to home after logout
+    logout();
+    router.push("/");
+    setMobileMenuOpen(false);
+  };
+
+  const toggleMobileMenu = () => {
+    setMobileMenuOpen(!mobileMenuOpen);
   };
 
   return (
-    <nav className="flex items-center justify-between p-4 max-w-7xl mx-auto">
+    <nav className="flex items-center justify-between p-4 max-w-7xl mx-auto relative">
       {/* Left Section */}
       <div className="flex items-center space-x-8">
         <Link
@@ -38,35 +43,114 @@ export default function Navbar() {
             }`}
           className="flex items-center text-[#3C65F5] font-semibold"
         >
-         <Image
+          <Image
             src="/logo.png"
             alt="Logo"
             width={100}
             height={40}
             className="h-10 w-auto"
-          /> 
+          />
           <Image
             src="/name.png"
             alt="Logo"
             width={100}
             height={40}
             className="h-7 w-auto"
-          />        
-          </Link>
+          />
+        </Link>
         <div className="hidden md:flex space-x-6">
           <TalentDropdown />
           <Link
             href="/explore-project"
             className="text-gray-600 hover:text-gray-900"
           >
-
             Explore Projects
           </Link>
         </div>
       </div>
 
-      {/* Right Section */}
-      <div className="flex items-center space-x-4">
+      {/* Mobile Menu Button */}
+      <div className="md:hidden">
+        <button
+          onClick={toggleMobileMenu}
+          className="text-gray-600 hover:text-gray-900 focus:outline-none"
+        >
+          {mobileMenuOpen ? (
+            <X className="h-6 w-6" />
+          ) : (
+            <Menu className="h-6 w-6" />
+          )}
+        </button>
+      </div>
+
+      {/* Mobile Menu */}
+      {mobileMenuOpen && (
+        <div className="md:hidden absolute top-full left-0 right-0 bg-white shadow-lg z-50 p-4 space-y-4 text-center">
+          <div className="flex flex-col space-y-3">
+            <Link
+              href="/explore-talent"
+              className="text-gray-600 hover:text-gray-900 p-2"
+              onClick={() => setMobileMenuOpen(false)}
+            >
+              Explore Talents
+            </Link>
+          </div>
+          <div className="flex flex-col space-y-3">
+            <Link
+              href="/explore-project"
+              className="text-gray-600 hover:text-gray-900 p-2"
+              onClick={() => setMobileMenuOpen(false)}
+            >
+              Explore Projects
+            </Link>
+          </div>
+          {user ? (
+            <div className="border-t text-center pt-3">
+              <Link
+                href={`/${user.accountType === "owner"
+                  ? "project-owner"
+                  : "portfolio-builder"
+                  }/${user.id}`}
+                className="block p-2 text-gray-600 hover:text-gray-900"
+                onClick={() => setMobileMenuOpen(false)}
+              >
+                Profile
+              </Link>
+              <Link
+                href="/profile-settings"
+                className="block p-2 text-gray-600 hover:text-gray-900"
+                onClick={() => setMobileMenuOpen(false)}
+              >
+                Settings
+              </Link>
+              <button
+                onClick={handleLogout}
+                className="w-full text-center p-2 text-red-500 hover:text-red-700 flex items-center align-center justify-center"
+              >
+                <LogOut className="h-4 w-4 mr-2" /> Logout
+              </button>
+            </div>
+          ) : (
+            <div className="flex flex-col space-y-2 pt-3 border-t ">
+              <Button asChild>
+                <Link href="/sign-up" onClick={() => setMobileMenuOpen(false)}>
+                  Sign Up
+                </Link>
+              </Button>
+              <Link
+                href="/sign-in"
+                className="text-center text-gray-600 hover:text-gray-900 p-2"
+                onClick={() => setMobileMenuOpen(false)}
+              >
+                Sign In
+              </Link>
+            </div>
+          )}
+        </div>
+      )}
+
+      {/* Desktop Right Section */}
+      <div className="hidden md:flex items-center space-x-4">
         {user ? (
           // ✅ Show "Account" dropdown when logged in
           <DropdownMenu>
@@ -116,7 +200,6 @@ export default function Navbar() {
             </Link>
           </>
         )}
-
       </div>
     </nav>
   );
